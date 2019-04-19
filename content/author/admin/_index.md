@@ -1,6 +1,6 @@
 +++
 # Display name
-name = "Nelson Bighetti"
+name = "kevin Caye"
 
 # Username (this should match the folder name)
 authors = ["admin"]
@@ -9,44 +9,44 @@ authors = ["admin"]
 superuser = true
 
 # Role/position
-role = "Professor of Artificial Intelligence"
+role = "Artificial Intelligence Engineer"
 
 # Organizations/Affiliations
 #   Separate multiple entries with a comma, using the form: `[ {name="Org1", url=""}, {name="Org2", url=""} ]`.
-organizations = [ { name = "Stanford University", url = "" } ]
+organizations = [ { name = "Kaizen Solutions", url = "https://kaizen-solutions.net/" } ]
 
 # Short bio (displayed in user profile at end of posts)
-bio = "My research interests include distributed robotics, mobile computing and programmable matter."
+bio = "My interests include artificial intelligence, smart buildings and statistics."
 
 # Enter email to display Gravatar (if Gravatar enabled in Config)
-email = ""
+email = "kevin@caye.fr"
 
 # List (academic) interests or hobbies
 interests = [
   "Artificial Intelligence",
-  "Computational Linguistics",
-  "Information Retrieval"
+  "Smart Building",
+  "Statistics"
 ]
 
 # Organizational groups that you belong to (for People widget)
 #   Set this to `[]` or comment out if you are not using People widget.
-user_groups = ["Researchers", "Visitors"]
+user_groups = []
 
 # List qualifications (such as academic degrees)
 [[education.courses]]
-  course = "PhD in Artificial Intelligence"
-  institution = "Stanford University"
-  year = 2012
+  course = "PhD in Statistical Modeling"
+  institution = "Université Grenoble Alpes"
+  year = 2017
 
 [[education.courses]]
-  course = "MEng in Artificial Intelligence"
-  institution = "Massachusetts Institute of Technology"
-  year = 2009
+  course = "Engineer in computer science and applied mathematics"
+  institution = "Grenoble-INP, ENSIMAG"
+  year = 2014
 
 [[education.courses]]
-  course = "BSc in Artificial Intelligence"
-  institution = "Massachusetts Institute of Technology"
-  year = 2008
+  course = "Classe préparatoire MPSI/MP *"
+  institution = "lycée Albert schweitzer"
+  year = 2011
 
 # Social/Academic Networking
 # For available icons, see: https://sourcethemes.com/academic/docs/widgets/#icons
@@ -61,17 +61,17 @@ user_groups = ["Researchers", "Visitors"]
 [[social]]
   icon = "twitter"
   icon_pack = "fab"
-  link = "https://twitter.com/GeorgeCushen"
+  link = "https://twitter.com/kevincaye"
 
 [[social]]
   icon = "google-scholar"
   icon_pack = "ai"
-  link = "https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ"
+  link = "https://scholar.google.fr/citations?user=MM4_FOsAAAAJ&hl"
 
 [[social]]
   icon = "github"
   icon_pack = "fab"
-  link = "https://github.com/gcushen"
+  link = "https://github.com/cayek"
 
 # Link to a PDF of your resume/CV from the About widget.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
@@ -82,6 +82,14 @@ user_groups = ["Researchers", "Visitors"]
 
 +++
 
-Nelson Bighetti is a professor of artificial intelligence at the Stanford AI Lab. His research interests include distributed robotics, mobile computing and programmable matter. He leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+Kevin Caye is an engineer from /École nationale supérieure d'informatique et de
+mathématiques appliquées/ currently working as consultant for Schneider
+Electric. he received a PhD in statistical modeling for genomics from
+/Université Grenoble Alpes/ in 2017. During the last year he has been involved
+in the organization of the Data Science competitions launched by Schneider
+Electric in collaboration with DrivenData.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate. 
+I am a technology enthusiast, I am particularly interested in domotic and data
+science. But when I am not on my computer I do sport. My favorite sports are
+kyokushinkai karate and trail running but I like practicing every mountain
+sport.
