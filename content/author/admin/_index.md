@@ -25,7 +25,8 @@ email = "kevin@caye.fr"
 interests = [
   "Artificial Intelligence",
   "Smart Building",
-  "Statistics"
+  "Statistics",
+  "Optimization"
 ]
 
 # Organizational groups that you belong to (for People widget)
@@ -34,7 +35,7 @@ user_groups = []
 
 # List qualifications (such as academic degrees)
 [[education.courses]]
-  course = "PhD in Statistical Modeling"
+  course = "Ph.D. in Statistical Modeling"
   institution = "Université Grenoble Alpes"
   year = 2017
 
@@ -58,10 +59,10 @@ user_groups = []
   icon_pack = "fas"
   link = "#contact"  # For a direct email link, use "mailto:test@example.org".
 
-[[social]]
-  icon = "twitter"
-  icon_pack = "fab"
-  link = "https://twitter.com/kevincaye"
+# [[social]]
+#   icon = "twitter"
+#   icon_pack = "fab"
+#   link = "https://twitter.com/kevincaye"
 
 [[social]]
   icon = "google-scholar"
@@ -75,19 +76,19 @@ user_groups = []
 
 # Link to a PDF of your resume/CV from the About widget.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
-# [[social]]
-#   icon = "cv"
-#   icon_pack = "ai"
-#   link = "files/cv.pdf"
+[[social]]
+  icon = "cv"
+  icon_pack = "ai"
+  link = "files/cv.pdf"
 
 +++
 
-Kevin Caye is an engineer from /École nationale supérieure d'informatique et de
-mathématiques appliquées/ currently working as consultant for Schneider
-Electric. he received a PhD in statistical modeling for genomics from
-/Université Grenoble Alpes/ in 2017. During the last year he has been involved
-in the organization of the Data Science competitions launched by Schneider
-Electric in collaboration with DrivenData.
+I am an engineer from *École nationale supérieure d'informatique et de
+mathématiques appliquées* currently working as a data science consultant for
+Schneider Electric. I received a Ph.D. in statistical modeling applied to
+genomics and epidemiology from *Université Grenoble Alpes* in 2017. During the
+last year have been involved in the organization of the Data Science
+competitions launched by Schneider Electric in collaboration with DrivenData.
 
 I am a technology enthusiast, I am particularly interested in domotic and data
 science. But when I am not on my computer I do sport. My favorite sports are

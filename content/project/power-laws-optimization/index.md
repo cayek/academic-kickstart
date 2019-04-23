@@ -1,14 +1,14 @@
 +++
-title = "Tess3r"
-date = 2019-04-19T17:44:08+02:00
+title = "Power Laws Optimization"
+date = 2019-04-23T17:15:38+02:00
 draft = false
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`
-tags = ["r", "genetics"]
+tags = ["python", "optimization"]
 
 # Project summary to display on homepage.
-summary = "tess3r is an R package for estimating and visualizing spatial population structure based on geographically constrained non-negative matrix factorization and population genetics"
+summary = "We propose a solution to the DrivenData competition Power Laws Optimization."
 
 # Slides (optional).
 #   Associate this page with Markdown slides.
@@ -19,11 +19,11 @@ summary = "tess3r is an R package for estimating and visualizing spatial populat
 slides = ""
 
 # Optional external URL for project (replaces project detail page).
-external_link = "https://bcm-uga.github.io/TESS3_encho_sen/"
+external_link = ""
 
 # Links (optional).
 url_pdf = ""
-url_code = "https://github.com/bcm-uga/TESS3_encho_sen"
+url_code = "https://github.com/kaizen-solutions/power-laws-optimization"
 url_dataset = ""
 url_slides = ""
 url_video = ""
@@ -43,3 +43,10 @@ url_poster = ""
   # Options: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight
   focal_point = ""
 +++
+
+We propose a solution of the DrivenData competition [Power Laws
+Optimization](https://www.drivendata.org/competitions/53/optimize-photovoltaic-battery/).
+The objective of the competition was to create an optimization algorithm that
+effectively uses available solar power, building energy consumption, and a
+battery system to buy, sell, and consume energy in the way that saves the most
+money and puts the least demand on the energy grid.

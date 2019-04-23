@@ -1,7 +1,18 @@
-.PHONY: help serve
+.PHONY: help hugo-serve
 
 help:
-	@echo "serve - serve the site with hugo"
+	@echo 'hugo-serve - serve the web site'
 
-serve:
-  hugo serve
+hugo-serve:
+	hugo serve
+
+import-publications:
+	@academic import --bibtex content/publication/publi.bib
+
+
+################
+## build my cv
+
+cv:
+	@make pdf -C content/cv
+	@cp -f ./content/cv/resume.pdf static/files/cv.pdf
