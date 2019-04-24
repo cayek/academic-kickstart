@@ -3,6 +3,15 @@
 help:
 	@echo 'hugo-serve - serve the web site'
 
+##########
+## deploy
+deploy: cv
+	@hugo
+	@rsync -avz --delete public/ perso.website:/home/user-data/www/default
+
+#############
+## tools
+
 hugo-serve:
 	hugo serve
 
