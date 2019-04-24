@@ -11,9 +11,9 @@ skills
 -------
 
 Computer science
-: **Programming :** R, python, C/C++, scala (beginner).
+: **Programming :** R, python, C/C++, scala (beginner)
 : **OS :** Linux, OS X
-: **Tools :** Emacs, Org-mode, Git, Rstudio, Jupyter, Docker.
+: **Tools :** Emacs, Org-mode, Git, Rstudio, Jupyter, Docker
 
 Mathematics
 : Optimization, Statistics, Probabilistic modeling, Machine learning, Operational Research.
@@ -27,7 +27,7 @@ Education
 ---------
 
 2014-oct. 2017 
-:   **Applied mathematics phd**; TIMC-IMAG, La Tronche (38) and
+:   **Ph.D in Statistical Modeling**; TIMC-IMAG, La Tronche (38) and
 Gipsa-lab, Saint Martin D'hères (38)
 
     *Matrix factorization methods for population genomics and association
@@ -49,19 +49,18 @@ Professional Experience
 
 2017-nov. Today
 : **Service Provider.**; Kaizen Solutions, Meylan (38). I am currently working
-  within the research and development team "Analytics Applications and Programs"
+  within the research and development team "Analytics & Artificial Intelligence"
   of Schneider Electric. This team is in charge of developing algorithms and
   programs for data analysis (energy consumption of buildings, detection of
   faults on electrical equipment, etc.).
   
 2014-oct. 2017
-: **Applied mathematics phd.** Ways to represent health and the living have
+: **Ph.D in Statistical Modeling** Ways to represent health and the living have
 changed considerably in recent years. The news representations are based on
 massive data collection coming from high throughput sequencing technologies. The
 objective of this thesis was to develop methods to detect associations between
 variables in such biological data. More especially, we were interested in
-statistical modeling based on optimization problems based on matrix
-factorizations.
+statistical modeling based on matrix factorization.
 
 2014-2016
 : **Teaching.**
@@ -81,15 +80,18 @@ prototype using OpenGL and C++.
 Juillet-Août 2013
 : **Research and development internship**; INRIA, Montbonnot (38). In the
 MAVERICK team, I implemented 3D rendering method for the voxel based rendering
-pipeline called Gigavoxel (C++, GLSL, CUDA).
+pipeline called Gigavoxel (C++, GLSL, CUDA.
 
 
 Scientific Publications
 --------------------
+**Lfmm 2: Fast and Accurate Inference of Gene-Environment Associations in Genome-Wide Studies**\
+Kevin Caye, Basile Jumentier, Johanna Lepeule, Olivier François\
+*Molecular Biology and Evolution*; doi: [10.1093/molbev/msz008](https://doi.org/10.1093/molbev/msz008) 
 
 **Fast Inference of Individual Admixture Coefficients Using Geographic Data**\
 Kevin Caye, Flora Jay, Olivier Michel, Olivier François\
-*The Annals of Applied Statistics* 
+*The Annals of Applied Statistics*; doi: [10.1214/17-aoas1106](https://doi.org/10.1214/17-aoas1106)
 
 **Identifying outlier loci in admixed and in continuous populations using ancestral population differentiation statistics**\
 Helena Martins, Kevin Caye, Keurcien Luu, Michael GB Blum, Olivier François\
@@ -109,6 +111,6 @@ Applied Mathematics
 
 ----
 
-> <kevin.caye@gmail.com> • +33 6 19 45 11 46 • 28 ans\
+> <kevin@caye.fr> • +33 6 19 45 11 46 • 28 ans\
 > 1 rue du tenaison - Saint-Egrève 38120, France\
-> <https://cayek.github.io/>
+> <https://caye.fr/>
