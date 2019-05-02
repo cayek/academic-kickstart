@@ -48,7 +48,7 @@ Professional Experience
 -------------------------------
 
 2017-nov. Today
-: **Service Provider.**; Kaizen Solutions, Meylan (38). I am currently working
+: **Consultant.**; Kaizen Solutions, Meylan (38). I am currently working
   within the research and development team "Analytics & Artificial Intelligence"
   of Schneider Electric. This team is in charge of developing algorithms and
   programs for data analysis (energy consumption of buildings, detection of
