@@ -1,6 +1,6 @@
 +++
-title = "Tess3r"
-date = 2016-10-01T17:44:08+02:00
+title = "Lfmm"
+date = 2017-10-01T14:45:03+02:00
 draft = false
 
 # Tags: can be used for filtering projects.
@@ -8,7 +8,7 @@ draft = false
 tags = ["r", "genetics"]
 
 # Project summary to display on homepage.
-summary = "tess3r is an R package for estimating and visualizing spatial population structure based on geographically constrained non-negative matrix factorization and population genetics."
+summary = "The R package lfmm implements new algorithms for parameter estimation in latent factor mixed models (LFMM)."
 
 # Slides (optional).
 #   Associate this page with Markdown slides.
@@ -19,11 +19,11 @@ summary = "tess3r is an R package for estimating and visualizing spatial populat
 slides = ""
 
 # Optional external URL for project (replaces project detail page).
-external_link = "https://bcm-uga.github.io/TESS3_encho_sen/"
+external_link = "https://bcm-uga.github.io/lfmm/index.html"
 
 # Links (optional).
 url_pdf = ""
-url_code = "https://github.com/bcm-uga/TESS3_encho_sen"
+url_code = "https://github.com/bcm-uga/lfmm"
 url_dataset = ""
 url_slides = ""
 url_video = ""

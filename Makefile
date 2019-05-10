@@ -25,3 +25,9 @@ import-publications:
 cv:
 	@make pdf -C content/cv
 	@cp -f ./content/cv/resume.pdf static/files/cv.pdf
+
+##############
+## themes
+
+init-theme:
+	@git submodule update --init
