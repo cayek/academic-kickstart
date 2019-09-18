@@ -14,9 +14,11 @@ Computer science
 : **Programming :** R, python, C/C++, scala (beginner)
 : **OS :** Linux, OS X
 : **Tools :** Emacs, Org-mode, Git, Rstudio, Jupyter, Docker
+: **Cloud Platform:** Azure
 
 Mathematics
-: Optimization, Statistics, Probabilistic modeling, Machine learning, Operational Research.
+: Optimization, Statistics, Probabilistic modeling, Machine learning, Deep
+  Learning, Operational Research,
 
 Languages
 : **English :** good working knowledge
@@ -64,9 +66,7 @@ statistical modeling based on matrix factorization.
 
 2014-2016
 : **Teaching.**
-: - Mathematics beginner courses for L1 students at UGA
-  - Mathematics support courses for L1 student at UGA
-  - Population dynamics courses for L1 student at UGA
+: - Mathematics and population dynamics courses for L1 students at UGA
   - End of year data science project for M1 student at l'ENSIMAG
 
 Février-Août 2014 
@@ -111,6 +111,6 @@ Applied Mathematics
 
 ----
 
-> <kevin@caye.fr> • +33 6 19 45 11 46 • 28 ans\
+> <kevin@caye.fr> • +33 6 19 45 11 46 • 29 ans\
 > 1 rue du tenaison - Saint-Egrève 38120, France\
 > <https://caye.fr/>
