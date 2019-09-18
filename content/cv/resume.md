@@ -18,7 +18,7 @@ Computer science
 
 Mathematics
 : Optimization, Statistics, Probabilistic modeling, Machine learning, Deep
-  Learning, Operational Research,
+  Learning, Operational Research.
 
 Languages
 : **English :** good working knowledge
