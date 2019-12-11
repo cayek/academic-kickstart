@@ -1,0 +1,688 @@
+# -*- coding: utf-8 -*-
+# -*- mode: org -*-
+
+#+TITLE: Le génie logiciel pour un ingénieur en /Machine Learning/
+#+AUTHOR: Kévin CAYE
+#+LANGUAGE: fr
+
+# reveal options: see https://github.com/yjwen/org-reveal
+#+REVEAL_ROOT: ../../js/reveal.js/
+#+REVEAL_TRANS: none
+#+REVEAL_PLUGINS: (highlight notes)
+#+OPTIONS: reveal_center:nil reveal_progress:t reveal_history:nil reveal_control:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil toc:nil
+#+OPTIONS: reveal_width:1200 reveal_height:800
+#+REVEAL_THEME: white
+#+REVEAL_HLEVEL: 1 ## all header on same lvl
+#+REVEAL_SPEED: fast
+#+REVEAL_EXTRA_CSS: ./extra.css
+#+REVEAL_EXTRA_JS: 
+
+
+* Qui je suis ?
+- Ancien Ensimag (promotion 2014)
+- Thèse en méthodes statistiques pour la génétique
+- Prestataire de service chez Kaizen Solution
+
+#+BEGIN_NOTES
+- Donc pour moi le génie logiciel c'est un effet bord ! j'ai vaguement abbordé
+  ca à l'ensimag ....
+- Mais c'est indispensable dans mon travail
+#+END_NOTES
+
+* Plan et objectifs 
+
+*Objectifs*
+
+Comprendre les outils et méthodes de développements utilisés en /Machine
+Learning/.
+
+*Plan*
+
+1. Le paysage du /Machine Learning/
+2. Comment mener un projet en /Machine Learning/
+
+#+BEGIN_NOTES
+1. Dans une première partie on va expliquer ce qu'est que le machine learning:
+  - ou il est utilisé
+  - quelle sont les différentes branches
+2. On verra comment un projet peut se développer du début a la fin
+   - ca sera l'occasion de voir les outils et méthode de travaille
+#+END_NOTES
+* 1. Le paysage du /machine learning/
+:PROPERTIES:
+:reveal_background: ./figures/wordle.png
+:reveal_background_size: 1000px
+:END:
+** Qu'est ce que le /Machine Learning/ ?
+*Approche traditionnelle*
+#+HTML: <img src="./figures/traditional_workflow.png" align="middle">
+
+#+BEGIN_NOTES
+Exemple: faire un filtre anti spam 
+1. on annalyse les spam et on reparque que certain mots clées: gratuit, carte de crédit
+2. on écrit des filtre a la main pour chaque cas
+3. on test et on répète 
+#+END_NOTES
+** Qu'est ce que le /Machine Learning/ ?
+*Approche /Machine Learning/*
+#+HTML: <img src="./figures/ml_workflow.png" align="middle">
+
+#+BEGIN_NOTES
+Exemple: 
+- on si on fait du machine learning l'algorithme qui detecte les spams va
+  chercher a trouver automatiquement les règles qui font qu'in spam est un spam
+#+END_NOTES
+** Pourquoi utiliser le /Machine Learning/ ?
+*Le /machine Learning/ est parfait pour*
+
+- les problèmes résolus en énumérant un grand nombre de règles
+- les problèmes très complexes ou trouver toutes les règles serait impossible
+- les problèmes ou les règles peuvent changer, ou il faut s'adapter à de
+  nouvelles données
+
+*Exemples*
+
+- filtre anti spam
+- reconnaissance vocale
+- détection de fautes sur des machines industrielles
+
+** Apprentissage supervisé
+*Un jeu de données labellisées*
+#+HTML: <img src="./figures/sup_ml0.png" align="middle">
+** Apprentissage supervisé
+*Régression*
+#+HTML: <img src="./figures/sup_ml1.png" align="middle">
+** Apprentissage supervisé
+*Exemples d'algorithme*
+- régression linéaire
+- arbres de décision
+- SVM (/Support Vector Machine/)
+- réseaux de neurones
+- et bien d'autres...
+** Apprentissage non supervisé
+*Un jeu de données NON labellisé*
+#+HTML: <img src="./figures/unsup_ml0.png" align="middle">
+** Apprentissage non supervisé
+*/Clustering/*
+#+HTML: <img src="./figures/unsup_ml1.png" align="middle">
+** Apprentissage non supervisé
+Quelques exemples d'algorithme: 
+
+*/Clustering/*
+- k-Means
+*Visualisation et réduction de la dimension*
+- Analyse en composant principale
+*Règle d'association*
+- Apriori
+#+BEGIN_NOTES
+L'idée sous jacente est de trouver une structure aux données, un moyen de les
+représenter pour:
+- identifier des données annormals (outlier)
+- découvrir que les personnes qui achète de la sauce barbecue et des chips chète
+  aussi en général des steaks 🤓. 
+#+END_NOTES
+
+** Apprentissage semi supervisé
+*Un jeu de données partiellement labellisé*
+#+HTML: <img src="./figures/semisup_ml0.png" align="middle">
+#+BEGIN_NOTES
+Exemple classique: 
+- quand on charge ses photos sur google photo il reconnaît seul les mêmes
+  personnes sur les différentes photos (clustering).
+- il suffit de labelliser une seul fois la personne sur une des photos pour que
+  tout le groupe soit labellisé.
+#+END_NOTES
+** Test et validation des algorithmes                             :noexport:
+
+*Mesure de la performance*
+Par exemple l'erreur absolue moyenne:
+
+$$ MAE = \frac{1}{n} \sum_{i =1}^{n} |Y_i - \hat{Y_i}| $$
+
+*Données de validation*
+
+Ce sont des données qui n'ont jamais été vu par les algorithmes, typiquement $20
+\%$ des données.
+
+*No Free Lunch Theorem ([[https://en.wikipedia.org/wiki/No_free_lunch_theorem][wikipedia]])*
+
+Il n'y pas de modèle universelle, qui serait le meilleur tout le temps.
+
+* 2. Comment mener un projet /Machine Learning/ ?
+
+*Objectif* Prédire le prix de l'immobilier en Californie.
+
+#+HTML: <img src="./figures/housing_californie.jpg" align="middle" width=600>
+
+#+BEGIN_NOTES
+Le diable est dans les détails donc je vais tacher de donner ces petit details
+d'organisation qui peuvent faire gagner du temps.
+
+On va voir les points clées
+
+#+END_NOTES
+** Projet /Machine Learning/: principales étapes
+
+1. Comprendre le problème
+2. Rassembler les données 
+3. Découvrir et visualisé les données
+4. Créer les modèles
+5. Déployer le système
+
+** Créer un dossier pour le projet @@html:<img src="./figures/logo_git.png" width="110" height="46" alt="Git" style="border: 0;" />@@ !!
+:LOGBOOK:
+- Note taken on [2019-01-04 ven. 11:33] \\
+  https://blog.algorithmia.com/becoming-a-10x-data-scientist/#prod
+:END:
+
+#+BEGIN_EXAMPLE
+├── Makefile           <- avec des commandes comme make data ou make train
+├── README.md          <- Point de départ pour un nouvel arrivant sur le projet
+├── data
+│   ├── external       <- Données venant d'un tierce
+│   ├── interim        <- Données transformées intermédiaires
+│   ├── processed      <- Données finales, prètes pour les algos
+│   └── raw            <- Les données d'origine, immuables ! 
+│
+├── docs               <- La documentation du projet (exemple: Sphinx ou MkDocs)
+│
+├── models             <- Modèles entrainés
+│
+├── notebooks          <- Les notebooks (exemple: Jupyter, Rmarkdown)
+│
+├── references         <- Manuel, présentation, doc etc.
+│
+├── reports            <- Rapports
+│   └── figures        <- figures des rapports
+│
+├── requirements.txt   <- Pour reproduire l'environnement de l'analyse, exemple
+│                         généré avec `pip freeze > requirements.txt`
+│
+├── src                <- Code source du projet (package python/R)
+#+END_EXAMPLE
+
+#+BEGIN_NOTES
+Mais avant de commencer il faut créer un espace de travaille !
+#+END_NOTES
+
+** 1. Comprendre le problème
+*** Comprendre le problème
+*Pourquoi le client a besoin de cette algorithme ?*
+#+BEGIN_QUOTE
+Le client veut savoir si il a intérêt à investir dans un quartier. Pour cela il
+lui faut le prix médian du quartier.
+#+END_QUOTE
+*** Comprendre le problème
+*Comment cet algorithme sera utilisé ? Dans quel environnent ?*
+
+#+HTML: <img src="./figures/pipeline.png" align="middle">
+
+*** Comprendre le problème
+*Existe t-il une solution actuellement ?*
+#+BEGIN_QUOTE
+La valeur est estimée par des experts ou des règles compliquées.
+#+END_QUOTE
+
+#+BEGIN_NOTES
+Cela donne une méthode de base pour évaluer notre proposition de nouvelle
+méthode.
+#+END_NOTES
+
+*** Modélisation du problème
+*De quelle type d'algorithme d'apprentissage avons nous besoins ?*
+
+#+ATTR_REVEAL: :frag roll-in
+*/Machine Learning/ supervisé:* en particulier il s'agit d'un problème de
+régression multiple (/multivariate regression/ en anglais).
+
+*** Choisir la métrique d'évaluation
+*Ça dépend du problème !*
+
+- Interprétable par le client ?
+  $$RMSE = \sqrt{\frac{1}{n} \sum_{i =1}^{n} (Y_i - \hat{Y_i})^2}$$
+- Plus dure a interpréter mais utile ? 
+  $$ R2 = 1 - \frac{\sum_{i =1}^{n} (Y_i - \hat{Y_i})^2}{\sum_{i =1}^{n} (Y_i - \bar{Y})^2} $$
+
+#+BEGIN_NOTES
+- La métrique dépend du problème !
+- mais comme c'est avec ca qu'on évaluation la performance il est très impotante de
+  bien la comprendre ! 
+#+END_NOTES
+** 2. Rassembler les données 
+*** Quelles données ?
+*Les données du client ?*
+
+*Des données publiques ?*
+- par exemple la météo ?
+
+*Des données simulées ?*
+- très utile pour tester les algorithmes
+- peut permettre d'agrandir le jeux de données
+
+#+BEGIN_NOTES
+- Il faut commencer par récupérer les données du client dans le cas de l'exemple
+  il s'agit des données des prix médian ainsi que d'autre statistique sur
+  différent quartier de Californie
+- il peut y avoir une différence de météo selon les quartiers 
+- Quand l'algorithme devra prédire le prix pour des nouveaux quartiers pourront
+  rassembler ces données ? A quel prix ? Il n'est pas forcement facile d'aller
+  récupérer les données météo.
+#+END_NOTES
+*** Quelles données ?
+
+*données dynamique ?*
+- Consommation énergétique d'un bâtiment
+
+*Pourront nous avoir accès à ces données quand l'algorithme sera en production
+ ?*
+- données météo
+
+*Big data ?*
+- données de log de machine industriel
+
+#+BEGIN_NOTES
+Quelques question qu'on peut se poser sur les données
+#+END_NOTES
+
+*** La natures des données ?
+:LOGBOOK:
+- Note taken on [2019-01-07 lun. 11:50] \\
+  insert image
+:END:
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+*Données tabulaires*
+#+HTML: <img src="./figures/dataframe.png" align="middle" width=200>
+
+*Les données séquentielles*
+#+HTML: <img src="./figures/ts.jpeg" align="middle" width=200>
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+*Les images*
+#+HTML: <img src="./figures/cat.jpg" align="middle" width=200>
+
+*Données textuelles*
+#+HTML: <img src="./figures/text.jpeg" align="middle" width=200>
+
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+A quelle type de données on est habituellement confrontés
+#+END_NOTES
+
+*** Structure de données: /DataFrame/
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+*Avantages*
+- opération classique sur les base données
+- représentation classique $observations \times features$
+- facile a paralléliser
+
+*Library*
+- R: =dplyr=
+- python: =pandas=
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+#+REVEAL_HTML: <div class="center">
+#+HTML: <img src="./figures/dataframe_struct.png" width="50%">
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+- Il existe de nombreux moyen de représenté les données mais pour travailler on
+  utilise très souvent des data frame.
+- C'est la structure de données utilisé pendant la phase d'exploration des données
+#+END_NOTES
+
+*** Structure de données: /Tensor/
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+*Avantages*
+- algorithmes fonctionnent bien avec ces structure de données
+- parfait pour représenter des images ou des séries temporelles
+- algèbre linéaire
+
+*Library*
+- =TensorFlow=
+- =Numpy=
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+#+HTML: <img src="./figures/array_struct.png" width="50%">
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+- c'est la structure de données des algorithmes de machine learning
+#+END_NOTES
+
+*** Notre exemple : /California Housing Prices dataset/
+
+#+HTML: <img src="./figures/cal_map.png" align="middle" width=600>
+
+- Données statique
+- /Small data/: ça tient sur un ordinateur
+
+** 3. Découvrir et visualisé les données
+*** Choisir un langage programmation ?
+*R*
+- communauté centrée autour des /data science/
+- état de l'art des méthodes statistique
+
+*python*
+- très grande communauté de développeurs, langage /élégant/
+- vision par ordinateur
+
+*Choisir un paradigme de programmation ?*
+- programmation fonctionnelle
+- programmation orientée objet
+  
+#+BEGIN_NOTES
+- si vous vous intéresser au machine learning, ces deux langages ressorte
+- Ce qui est sur c'est qu'a cette étape de prototypage il faut pouvoir avancer
+  vite, ces deux langage on une grosse communauté et des environnements adapté
+  au machine learning.
+- si je devais en choisir un ca serai le R: 
+  - communauté plus petite et centré autour des data science
+  - outils de traitement et vizualisation de données plus puissant
+  - language plutot fonctionnel
+- une question qu'on se pose jamais c'est le choix de paradigme de programmation
+  - pour simplifier ca veut dire coder en suivant quelque règle/habitude
+  - pour SIMPLIFIER on peut distinguer deux grands paradigmes, qui sont pas
+    forcément disjoint
+#+END_NOTES
+*** Programmation orienté objet
+#+REVEAL_HTML: <div class="column" style="float:left; width: 70%">
+*En quelques mots*
+- on décompose le problème en objets
+- concept d'objets: attribues, héritage, interaction entre objets
+- programmation impérative: modification de l'état internes des objets
+
+*Avantages*
+- permet de concevoir des logiciels complexes
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 30%">
+#+HTML: <img src="./figures/design_pattern.jpg" width="50%">
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+- un problème est décomposé en object avec des états internes et des interaction
+  en ces objects
+#+END_NOTES
+*** Programmation orienté objet: exemple en python
+On veux ajouter les éléments d'un tableau 
+
+#+BEGIN_SRC python :results output :exports both :eval no-export 
+class Array:
+    def __init__(self, data):
+        self.data = data
+
+    def add(self, t2):
+        for i in range(len(self.data)):
+            self.data[i] = t2.data[i] + self.data[i]
+
+a1 = Array([1,2,3])
+a2 = Array([3,8,6])
+a1.add(a2)
+print(a1.data)
+#+END_SRC
+
+#+RESULTS:
+: [4, 10, 9]
+
+#+BEGIN_NOTES
+- On commence par creer un objet et on lui définie une méthodes.
+#+END_NOTES
+
+*** Programmation fonctionnelle 
+:LOGBOOK:
+- Note taken on [2019-01-07 lun. 17:50] \\
+  [[https://docs.python.org/3/howto/functional.html][python doc: Functional Programming HOWTO]]
+- Note taken on [2019-01-07 lun. 17:14] \\
+  [[https://fr.wikipedia.org/wiki/Programmation_fonctionnelle][wikipedia]]
+:END:
+
+*En quelques mots*
+- on décompose le problème en fonctions
+- concept de fonctions: fonctions pures, lamda-fonction, récursion
+- programmation déclarative: composants logiciels indépendants du contexte et ne
+  comportant aucun état interne.
+
+*Avantages*
+- plus simple a tester
+- concept de pipeline de données
+- parallélisation sur plusieurs machines/core
+
+#+BEGIN_NOTES
+- On décompose le problème en fonctions imbriquées, les fonctions on une etré et
+  une sortie et sont pures ! 
+#+END_NOTES
+*** Programmation fonctionnelle: un exemple en python 
+On veux ajouter les éléments d'un tableau 
+
+#+BEGIN_SRC python :results output :exports both :eval no-export 
+def add(x, y):
+    return x + y
+
+a1 = [1,2,3]
+a2 = [3,8,6]
+
+print(map(add, a1, a2))
+#+END_SRC
+
+#+RESULTS:
+: [4, 10, 9]
+
+#+BEGIN_NOTES
+- on utilise les types de base python et on cherche découper la tache en
+  fonctions
+#+END_NOTES
+
+*** Créer un environnement isolé et reproductible 
+*Pourquoi ?*
+- Pour reproduire les résultats
+- Facilite la mise en production 
+
+*Exemple d'outils*
+- Python: =virtualenv=
+- R et python: =conda=
+- R: packrat
+
+#+BEGIN_SRC shell
+conda create -n california_env python=3.6 numpy pandas scikit-learn 
+#+END_SRC
+
+#+BEGIN_NOTES
+
+#+END_NOTES
+
+*** Les notebooks
+#+REVEAL_HTML: <div class="column" style="float:left; width: 30%">
+*Exemples de notebook*
+- Jupyter notebook 
+- Rmarkdown
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 70%">
+#+HTML: <img src="./figures/example-notebook.png" width="100%">
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+- un notebooks un environnement de dévellopement ou on peut coder et decrire ce
+  que l'on code (litterate programming)
+- les sorties du code sont capturé et peuvent être reprise plus tard
+#+END_NOTES
+
+*** CANCELLED Trop de notebooks, tue le notebook                 :noexport:
+CLOSED: [2019-01-09 mer. 13:33]
+- see notebook war ! https://yihui.name/en/2018/09/notebook-war/
+- quand les utiliser et quand s'arrêter !
+*** Notre exemple : visualisation des données 
+
+#+HTML: <img src="./figures/scatter_plot.png" width="75%">
+
+#+BEGIN_NOTES
+- la scatter matrix
+- in permet de rapidement voir les corrélation entre les variables.
+- par exemple on voit qu'il y a une corrélation entre median_income et median_house_value
+- donc c'est un feature interessant pour prédire la valeur de maison
+#+END_NOTES
+** 4. Créer les modèles
+*** Créer une stratégie d'évaluation
+
+*Données de test*
+
+- Ce sont des données qui n'ont jamais été vu par les algorithmes, typiquement
+  $20 \%$ des données.
+- Évaluer l'erreur du modèle sur des nouvelle données
+
+*Données de validation*
+
+- Ce sont des données utilisé pour valider la phase d'apprentissage
+- choisir les hyperparamètres
+
+#+BEGIN_NOTES
+- Critique ! 
+- Il faut que le dataset de test/validation soient représentatifs d'un nouveau
+  dataset.
+#+END_NOTES
+
+*** Créer une stratégie d'évaluation
+
+*Données structurées ?*
+#+HTML: <img src="./figures/ts_val_test.png" align="middle" width=600>
+
+*** Créer une stratégie d'évaluation
+*Notre exemples* données sont stratifiées
+
+#+HTML: <img src="./figures/bar.jpg" align="middle" width="60%">
+Histogramme des catégories de loyers
+
+*** Créer des modèles
+
+*C'est partie pour le code !*
+
+- Faire des packages: R et python sont très bien pour ca
+- documenter les fonctions: R: Roxygen, python: docstring
+
+*TDD: /Test Driven Development/*
+
+- python: =pytest=, R: =testthat=
+- c'est plus simple en programmation fonctionnelle car pas d'effets de bord
+*** Modèle pour notre exemple
+*Régression linéaire ridge*
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+- On modélise: 
+  $$ Y = X B^T + E  $$ 
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+- On minimise 
+  $$ f(B) = || Y - X B^T ||^2 + beta ||B||^2 $$
+#+REVEAL_HTML: </div>
+
+*Random forest*
+#+HTML: <img src="./figures/random_forest.png" align="middle" width="45%">
+
+#+BEGIN_NOTES
+- l'un des modèles est simple 
+- lautre est compliqué et en générale donne des meilleur résultats de prédiction
+- les deux modèles on est hyper paramètre => comment on les choisis ? 
+#+END_NOTES
+
+*** Évaluation et /tuning/ des modèles par la validation croisée
+
+#+HTML: <img src="./figures/cv.png" align="middle">
+
+#+BEGIN_NOTES
+- On choisi le beta de la regression linéaire qui minimise l'erreur de cross validation !!
+#+END_NOTES
+
+*** Choix d'un modèle ?
+
+*Critères pour choisir*
+
+- Performance: CV, erreur sur les données de validations
+- Facile à mettre en production: 
+  - je peux l'intégrer sur la plate-forme de production ?
+- Facile à déboguer
+  - si le modèle donne de mauvais résultats 
+- Interpretable
+  - je peux comprendre pourquoi cette prédiction ? 
+** 5. Déployer le système
+*** Déployer le modèle
+
+Maintenant qu'on a un modèle il faut l'intégrer dans le système du client !
+
+*Questions*
+- Comment ce connecté à la base de données ? 
+- Comment de RAM pour notre modèle ?
+- Logging ?
+- Comment passer à l'échelle ?
+- ...
+
+#+BEGIN_NOTES
+- On arrète de s'amuser !!!
+- C'est une Etape très dépendante de l'environnement du client mais il y a
+  quelques points questions clées.
+- on des préoccupation de mise en production ! 
+#+END_NOTES
+*** /Developpement/ - /Operations/
+
+#+HTML: <img src="./figures/dev_ops.png" width="100%">
+
+#+BEGIN_NOTES
+Quand on cherche à déployer un model
+On a traditionnellement d'un coté 
+- le développement logiciel 
+- operations: administration des infrastructures informatiques 
+#+END_NOTES
+
+*** Dev-Ops
+
+#+HTML: <img src="./figures/devops.png" width="100%">
+
+#+BEGIN_NOTES
+Une facon plus moderne de travailler consiste à unifier Dev et Ops
+En pratique : Quelles sources sont attendues ? Comment ajouter mes sources ?
+
+Le devops est un mouvement en ingénierie informatique et une pratique technique
+visant à l'unification du développement logiciel (dev) et de l'administration
+des infrastructures informatiques (ops), notamment l'administration système.
+#+END_NOTES
+
+*** Architecture orientée services
+
+#+HTML: <img src="./figures/components.png" width="60%">
+#+BEGIN_NOTES
+- Pour unifier le developpement et opération une pratique courante est fournir des API! 
+- Notre service (ici la prédiction du prix de l'immobilier)
+- dans ce composant on gère le dev, le modèle et l'infrastructure ! 
+#+END_NOTES
+
+* Conclusion: /Cross-industry standard process for data mining/
+
+#+HTML: <img src="./figures/800px-CRISP-DM_Process_Diagram.png" align="middle"  width="45%">
+
+* Références
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+
+- [[http://shop.oreilly.com/product/0636920052289.do][Hands-On Machine Learning with Scikit-Learn and TensorFlow]]
+- [[https://fr.slideshare.net/Hadoop_Summit/how-to-deploy-machine-learning-models-into-production][How to deploy machine learning models into production]], [[https://www.youtube.com/watch?v=-UYyyeYJAoQ][youtube]]
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+#+HTML: <img src="./figures/book_ml.jpg" align="middle"  width="60%">
+
+#+REVEAL_HTML: </div>
+
+
+* Notes sur la présentation
+** Le [2019-01-09 mer.], cours de GL à l'Ensimag
+- la partie devops, intégration continue était trop courte.
+- trop de détails sur le machine learning et surtout sur des éléments techniques
+  comme la cross validation etc.
