@@ -1,0 +1,154 @@
+# -*- coding: utf-8 -*-
+# -*- mode: org -*-
+
+#+TITLE: /Machine Learning/ en Production
+#+AUTHOR: Kévin CAYE
+#+LANGUAGE: fr
+
+# reveal options: see https://github.com/yjwen/org-reveal
+#+REVEAL_ROOT: ../js/reveal.js/
+#+REVEAL_TRANS: none
+#+REVEAL_PLUGINS: (highlight notes)
+#+OPTIONS: reveal_center:nil reveal_progress:t reveal_history:nil reveal_control:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil toc:nil
+#+OPTIONS: reveal_width:1200 reveal_height:800
+#+REVEAL_THEME: white
+#+REVEAL_HLEVEL: 1 ## all header on same lvl
+#+REVEAL_SPEED: fast
+#+REVEAL_EXTRA_CSS: ./extra.css
+#+REVEAL_EXTRA_JS:
+
+
+#+BEGIN_SRC emacs-lisp :eval no-export :exports none
+(execute-kbd-macro "\C-c\C-evv")
+#+END_SRC
+
+#+RESULTS:
+
+* Qui je suis ?
+- Ancien Ensimag (promotion 2014)
+- Thèse en méthodes statistiques pour la génétique
+- Prestataire de service chez Probayes
+
+#+BEGIN_NOTES
+- Donc pour moi le génie logiciel c'est un outils ! j'ai vaguement abbordé
+  ca à l'ensimag ....
+- Mais c'est indispensable dans mon travail
+#+END_NOTES
+* Plan et objectifs
+
+*Objectifs*
+
+Répondre aux questions:
+- Comment développer un logiciel qui utilise du /machine learning/ ❓
+- Comment déployer une solution logiciel utilisant un modèle d'intelligence
+  artificiel en production ❓
+
+*Plan*
+
+1. Dans les grandes lignes
+2. Un Exemple
+
+#+BEGIN_NOTES
+On va faire un zoom sur la production : car sans production pas d'utilité de la
+solution ! Du moins pour le client ! Donc la production et les utilisateur
+finaux doivent toujours être gardé en tète !
+#+END_NOTES
+
+* Dans les grandes lignes
+** /Machine learning/
+*Une définition pour un informaticien*
+
+#+begin_quote
+Machine Learning is the science (and art) of programming computers so they can
+learn from data.
+#+end_quote
+
+#+ATTR_REVEAL: :frag (appear)
+*L'intelligence artificielle est parfaite pour*
+#+ATTR_REVEAL: :frag (appear)
+- les problèmes résolus en énumérant un grand nombre de règles
+- les problèmes très complexes ou trouver toutes les règles serait impossible
+- les problèmes ou les règles peuvent changer, ou il faut s'adapter à de
+  nouvelles données
+
+*** Exemple: approche traditionnelle d'un filtre anti-spam
+#+HTML: <img src="./figures/traditional_workflow.png" align="middle">
+*** Exemple: approche /Machine Learning/ d'un filtre anti-spam
+#+HTML: <img src="./figures/ml_workflow.png" align="middle">
+** En quoi le /Machine Learning/ complique le développement logiciel ?
+*** Les données
+#+begin_quote
+*Découvrir, gérer et versioner les données* pour développer les applications
+/machine learning/ est bien plus complexe que pour dans applciations classiques.
+Il y a des technologies très connu pour versioner le code, ce n'est pas le cas
+pour les données.
+#+end_quote
+*** Les modèles
+#+begin_quote
+*Dans un système complexes les modèles*
+1. sont influencés par les nouvelles données
+2. sont compliqués a couplés et étendre
+3. ont des interaction complexe entre eux
+#+end_quote
+
+#+BEGIN_NOTES
+Par exemple:
+1. exemple de google traduction
+2. un modèle qui reconnaît des image et un modèle devine la suite de la phrase ne
+   donne pas un modèle qui écrit des légende d'image
+3. exemple d'un modèle de prédiction de la météo et de prédiction de la
+   consonassions d'un bâtiment. L'erreur du model1 doit être connu et elle est
+   importante lors de l'apprentissage !
+
+Donc on a un problème avec un des principe de base en génie logiciel: le
+découplage.
+#+END_NOTES
+*** L'équipe
+#+begin_quote
+*Construire et paramétré des modèles* requières d'avoir des connaissances en
+l'apprentissage automatique et informatique. Il faut donc des équipes
+pluridisciplinaire.
+#+end_quote
+** Une pipeline de travail pour un projet Machine Learning
+#+HTML: <img src="./figures/ml_gl_workflow.png" align="middle">
+** Quelques /Anti-Pattern/
+** La production
+#+HTML: <img src="./figures/mem_prod.png" align="middle">
+
+#+BEGIN_NOTES
+Et donc la mise en prod
+#+END_NOTES
+** Les points clés de la production
+** Quelques solutions pour le déploiement en production
+* Un exemple
+** La problématique
+** Contraintes techniques clés
+
+#+ATTR_REVEAL: :frag (appear)
+- On veut le *moins de fausses détections possibles*. Pour ne pas engager des
+  poursuites judiciaires non fondées.
+- Le films *protégés* ne peuvent pas sortir de l'infrastructure du client
+- Le client protège environ *1000 films soit 2000 heures de vidéo*
+- Le client souhaite qualifier environs *100 films par jours*
+- Système du client existant est une *application monolithique* tournant sur une
+  machine linux
+
+#+BEGIN_NOTES
+Leur demandé quel question il manque !
+#+END_NOTES
+
+** La preuve de concept
+** Comment valider ?
+** Comment déployer ?
+** Comment surveiller ?
+** Comment faire évoluer ?
+** Comment faire de l'intégration/déploiement continue ?
+* Conclusion
+* Références
+- cite:geron2017hands
+- cite:amershi2019software
+- [[https://blog.acolyer.org/2019/07/08/software-engineering-for-machine-learning/][Morning paper: Software engineering for machine learning: a case study]]
+
+#+REVEAL: split
+bibliography:~/bibliotheque/bibliotheque.bib

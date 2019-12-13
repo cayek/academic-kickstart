@@ -16,7 +16,7 @@
 #+REVEAL_HLEVEL: 1 ## all header on same lvl
 #+REVEAL_SPEED: fast
 #+REVEAL_EXTRA_CSS: ./extra.css
-#+REVEAL_EXTRA_JS: 
+#+REVEAL_EXTRA_JS:
 
 
 * Qui je suis ?
@@ -30,7 +30,7 @@
 - Mais c'est indispensable dans mon travail
 #+END_NOTES
 
-* Plan et objectifs 
+* Plan et objectifs
 
 *Objectifs*
 
@@ -59,17 +59,17 @@ Learning/.
 #+HTML: <img src="./figures/traditional_workflow.png" align="middle">
 
 #+BEGIN_NOTES
-Exemple: faire un filtre anti spam 
+Exemple: faire un filtre anti spam
 1. on annalyse les spam et on reparque que certain mots clées: gratuit, carte de crédit
 2. on écrit des filtre a la main pour chaque cas
-3. on test et on répète 
+3. on test et on répète
 #+END_NOTES
 ** Qu'est ce que le /Machine Learning/ ?
 *Approche /Machine Learning/*
 #+HTML: <img src="./figures/ml_workflow.png" align="middle">
 
 #+BEGIN_NOTES
-Exemple: 
+Exemple:
 - on si on fait du machine learning l'algorithme qui detecte les spams va
   chercher a trouver automatiquement les règles qui font qu'in spam est un spam
 #+END_NOTES
@@ -107,7 +107,7 @@ Exemple:
 */Clustering/*
 #+HTML: <img src="./figures/unsup_ml1.png" align="middle">
 ** Apprentissage non supervisé
-Quelques exemples d'algorithme: 
+Quelques exemples d'algorithme:
 
 */Clustering/*
 - k-Means
@@ -120,14 +120,14 @@ L'idée sous jacente est de trouver une structure aux données, un moyen de les
 représenter pour:
 - identifier des données annormals (outlier)
 - découvrir que les personnes qui achète de la sauce barbecue et des chips chète
-  aussi en général des steaks 🤓. 
+  aussi en général des steaks 🤓.
 #+END_NOTES
 
 ** Apprentissage semi supervisé
 *Un jeu de données partiellement labellisé*
 #+HTML: <img src="./figures/semisup_ml0.png" align="middle">
 #+BEGIN_NOTES
-Exemple classique: 
+Exemple classique:
 - quand on charge ses photos sur google photo il reconnaît seul les mêmes
   personnes sur les différentes photos (clustering).
 - il suffit de labelliser une seul fois la personne sur une des photos pour que
@@ -165,7 +165,7 @@ On va voir les points clées
 ** Projet /Machine Learning/: principales étapes
 
 1. Comprendre le problème
-2. Rassembler les données 
+2. Rassembler les données
 3. Découvrir et visualisé les données
 4. Créer les modèles
 5. Déployer le système
@@ -183,7 +183,7 @@ On va voir les points clées
 │   ├── external       <- Données venant d'un tierce
 │   ├── interim        <- Données transformées intermédiaires
 │   ├── processed      <- Données finales, prètes pour les algos
-│   └── raw            <- Les données d'origine, immuables ! 
+│   └── raw            <- Les données d'origine, immuables !
 │
 ├── docs               <- La documentation du projet (exemple: Sphinx ou MkDocs)
 │
@@ -241,15 +241,15 @@ régression multiple (/multivariate regression/ en anglais).
 
 - Interprétable par le client ?
   $$RMSE = \sqrt{\frac{1}{n} \sum_{i =1}^{n} (Y_i - \hat{Y_i})^2}$$
-- Plus dure a interpréter mais utile ? 
+- Plus dure a interpréter mais utile ?
   $$ R2 = 1 - \frac{\sum_{i =1}^{n} (Y_i - \hat{Y_i})^2}{\sum_{i =1}^{n} (Y_i - \bar{Y})^2} $$
 
 #+BEGIN_NOTES
 - La métrique dépend du problème !
 - mais comme c'est avec ca qu'on évaluation la performance il est très impotante de
-  bien la comprendre ! 
+  bien la comprendre !
 #+END_NOTES
-** 2. Rassembler les données 
+** 2. Rassembler les données
 *** Quelles données ?
 *Les données du client ?*
 
@@ -264,7 +264,7 @@ régression multiple (/multivariate regression/ en anglais).
 - Il faut commencer par récupérer les données du client dans le cas de l'exemple
   il s'agit des données des prix médian ainsi que d'autre statistique sur
   différent quartier de Californie
-- il peut y avoir une différence de météo selon les quartiers 
+- il peut y avoir une différence de météo selon les quartiers
 - Quand l'algorithme devra prédire le prix pour des nouveaux quartiers pourront
   rassembler ces données ? A quel prix ? Il n'est pas forcement facile d'aller
   récupérer les données météo.
@@ -379,13 +379,13 @@ A quelle type de données on est habituellement confrontés
 *Choisir un paradigme de programmation ?*
 - programmation fonctionnelle
 - programmation orientée objet
-  
+
 #+BEGIN_NOTES
 - si vous vous intéresser au machine learning, ces deux langages ressorte
 - Ce qui est sur c'est qu'a cette étape de prototypage il faut pouvoir avancer
   vite, ces deux langage on une grosse communauté et des environnements adapté
   au machine learning.
-- si je devais en choisir un ca serai le R: 
+- si je devais en choisir un ca serai le R:
   - communauté plus petite et centré autour des data science
   - outils de traitement et vizualisation de données plus puissant
   - language plutot fonctionnel
@@ -414,9 +414,9 @@ A quelle type de données on est habituellement confrontés
   en ces objects
 #+END_NOTES
 *** Programmation orienté objet: exemple en python
-On veux ajouter les éléments d'un tableau 
+On veux ajouter les éléments d'un tableau
 
-#+BEGIN_SRC python :results output :exports both :eval no-export 
+#+BEGIN_SRC python :results output :exports both :eval no-export
 class Array:
     def __init__(self, data):
         self.data = data
@@ -438,7 +438,7 @@ print(a1.data)
 - On commence par creer un objet et on lui définie une méthodes.
 #+END_NOTES
 
-*** Programmation fonctionnelle 
+*** Programmation fonctionnelle
 :LOGBOOK:
 - Note taken on [2019-01-07 lun. 17:50] \\
   [[https://docs.python.org/3/howto/functional.html][python doc: Functional Programming HOWTO]]
@@ -459,12 +459,12 @@ print(a1.data)
 
 #+BEGIN_NOTES
 - On décompose le problème en fonctions imbriquées, les fonctions on une etré et
-  une sortie et sont pures ! 
+  une sortie et sont pures !
 #+END_NOTES
-*** Programmation fonctionnelle: un exemple en python 
-On veux ajouter les éléments d'un tableau 
+*** Programmation fonctionnelle: un exemple en python
+On veux ajouter les éléments d'un tableau
 
-#+BEGIN_SRC python :results output :exports both :eval no-export 
+#+BEGIN_SRC python :results output :exports both :eval no-export
 def add(x, y):
     return x + y
 
@@ -482,10 +482,10 @@ print(map(add, a1, a2))
   fonctions
 #+END_NOTES
 
-*** Créer un environnement isolé et reproductible 
+*** Créer un environnement isolé et reproductible
 *Pourquoi ?*
 - Pour reproduire les résultats
-- Facilite la mise en production 
+- Facilite la mise en production
 
 *Exemple d'outils*
 - Python: =virtualenv=
@@ -493,7 +493,7 @@ print(map(add, a1, a2))
 - R: packrat
 
 #+BEGIN_SRC shell
-conda create -n california_env python=3.6 numpy pandas scikit-learn 
+conda create -n california_env python=3.6 numpy pandas scikit-learn
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -503,7 +503,7 @@ conda create -n california_env python=3.6 numpy pandas scikit-learn
 *** Les notebooks
 #+REVEAL_HTML: <div class="column" style="float:left; width: 30%">
 *Exemples de notebook*
-- Jupyter notebook 
+- Jupyter notebook
 - Rmarkdown
 #+REVEAL_HTML: </div>
 
@@ -521,7 +521,7 @@ conda create -n california_env python=3.6 numpy pandas scikit-learn
 CLOSED: [2019-01-09 mer. 13:33]
 - see notebook war ! https://yihui.name/en/2018/09/notebook-war/
 - quand les utiliser et quand s'arrêter !
-*** Notre exemple : visualisation des données 
+*** Notre exemple : visualisation des données
 
 #+HTML: <img src="./figures/scatter_plot.png" width="75%">
 
@@ -546,7 +546,7 @@ CLOSED: [2019-01-09 mer. 13:33]
 - choisir les hyperparamètres
 
 #+BEGIN_NOTES
-- Critique ! 
+- Critique !
 - Il faut que le dataset de test/validation soient représentatifs d'un nouveau
   dataset.
 #+END_NOTES
@@ -576,11 +576,11 @@ Histogramme des catégories de loyers
 *** Modèle pour notre exemple
 *Régression linéaire ridge*
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
-- On modélise: 
-  $$ Y = X B^T + E  $$ 
+- On modélise:
+  $$ Y = X B^T + E  $$
 #+REVEAL_HTML: </div>
 #+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
-- On minimise 
+- On minimise
   $$ f(B) = || Y - X B^T ||^2 + beta ||B||^2 $$
 #+REVEAL_HTML: </div>
 
@@ -588,9 +588,9 @@ Histogramme des catégories de loyers
 #+HTML: <img src="./figures/random_forest.png" align="middle" width="45%">
 
 #+BEGIN_NOTES
-- l'un des modèles est simple 
+- l'un des modèles est simple
 - lautre est compliqué et en générale donne des meilleur résultats de prédiction
-- les deux modèles on est hyper paramètre => comment on les choisis ? 
+- les deux modèles on est hyper paramètre => comment on les choisis ?
 #+END_NOTES
 
 *** Évaluation et /tuning/ des modèles par la validation croisée
@@ -606,19 +606,19 @@ Histogramme des catégories de loyers
 *Critères pour choisir*
 
 - Performance: CV, erreur sur les données de validations
-- Facile à mettre en production: 
+- Facile à mettre en production:
   - je peux l'intégrer sur la plate-forme de production ?
 - Facile à déboguer
-  - si le modèle donne de mauvais résultats 
+  - si le modèle donne de mauvais résultats
 - Interpretable
-  - je peux comprendre pourquoi cette prédiction ? 
+  - je peux comprendre pourquoi cette prédiction ?
 ** 5. Déployer le système
 *** Déployer le modèle
 
 Maintenant qu'on a un modèle il faut l'intégrer dans le système du client !
 
 *Questions*
-- Comment ce connecté à la base de données ? 
+- Comment ce connecté à la base de données ?
 - Comment de RAM pour notre modèle ?
 - Logging ?
 - Comment passer à l'échelle ?
@@ -628,7 +628,7 @@ Maintenant qu'on a un modèle il faut l'intégrer dans le système du client !
 - On arrète de s'amuser !!!
 - C'est une Etape très dépendante de l'environnement du client mais il y a
   quelques points questions clées.
-- on des préoccupation de mise en production ! 
+- on des préoccupation de mise en production !
 #+END_NOTES
 *** /Developpement/ - /Operations/
 
@@ -636,9 +636,9 @@ Maintenant qu'on a un modèle il faut l'intégrer dans le système du client !
 
 #+BEGIN_NOTES
 Quand on cherche à déployer un model
-On a traditionnellement d'un coté 
-- le développement logiciel 
-- operations: administration des infrastructures informatiques 
+On a traditionnellement d'un coté
+- le développement logiciel
+- operations: administration des infrastructures informatiques
 #+END_NOTES
 
 *** Dev-Ops
@@ -658,9 +658,9 @@ des infrastructures informatiques (ops), notamment l'administration système.
 
 #+HTML: <img src="./figures/components.png" width="60%">
 #+BEGIN_NOTES
-- Pour unifier le developpement et opération une pratique courante est fournir des API! 
+- Pour unifier le developpement et opération une pratique courante est fournir des API!
 - Notre service (ici la prédiction du prix de l'immobilier)
-- dans ce composant on gère le dev, le modèle et l'infrastructure ! 
+- dans ce composant on gère le dev, le modèle et l'infrastructure !
 #+END_NOTES
 
 * Conclusion: /Cross-industry standard process for data mining/
@@ -679,7 +679,6 @@ des infrastructures informatiques (ops), notamment l'administration système.
 #+HTML: <img src="./figures/book_ml.jpg" align="middle"  width="60%">
 
 #+REVEAL_HTML: </div>
-
 
 * Notes sur la présentation
 ** Le [2019-01-09 mer.], cours de GL à l'Ensimag
