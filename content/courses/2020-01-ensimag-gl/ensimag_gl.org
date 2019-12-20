@@ -46,7 +46,7 @@ Répondre aux questions:
 
 *Plan*
 
-1. Dans les grandes lignes
+1. Vue d'ensemble
 2. Un Exemple
 
 #+BEGIN_NOTES
@@ -55,7 +55,7 @@ solution ! Du moins pour le client ! Donc la production et les utilisateur
 finaux doivent toujours être gardé en tète !
 #+END_NOTES
 
-* Dans les grandes lignes
+* Vue d'ensemble
 ** /Machine learning/
 *Une définition pour un informaticien*
 
@@ -65,7 +65,7 @@ learn from data.
 #+end_quote
 
 #+ATTR_REVEAL: :frag (appear)
-*L'intelligence artificielle est parfaite pour*
+*Quant utiliser le /machine learning/*
 #+ATTR_REVEAL: :frag (appear)
 - les problèmes résolus en énumérant un grand nombre de règles
 - les problèmes très complexes ou trouver toutes les règles serait impossible
@@ -77,14 +77,52 @@ learn from data.
 *** Exemple: approche /Machine Learning/ d'un filtre anti-spam
 #+HTML: <img src="./figures/ml_workflow.png" align="middle">
 ** En quoi le /Machine Learning/ complique le développement logiciel ?
-*** Les données
-#+begin_quote
-*Découvrir, gérer et versioner les données* pour développer les applications
-/machine learning/ est bien plus complexe que pour dans applciations classiques.
-Il y a des technologies très connu pour versioner le code, ce n'est pas le cas
-pour les données.
-#+end_quote
+
+
+#+HTML: <img src="./figures/ml_system.jpg" align="middle">
+
+#+BEGIN_NOTES
+- ml représente une petite partie du système complet !
+- le premier déploiement peut être simple
+- par contre si on pense pas le système complet la dette technique arrive avec
+  - la maintenance
+  - la mise a jours des modèles
+  - le monitoring des modèle
+
+ref: [[https://christophergs.github.io/machine%2520learning/2019/03/17/how-to-deploy-machine-learning-models/][1. Why are ML Systems Hard?]]
+#+END_NOTES
+
+*** La dépendance au données coûte plus chère que la dépendance au code
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+
+#+HTML: <img src="./figures/xkcd_data.png" align="middle">
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+
+#+ATTR_REVEAL: :frag (appear)
+1. Il existe des outils pour détecter la dépendance au code, pas pour les
+   données
+2. Les données sont en perpétuel changement
+3. On peut avoir des boucles d'interaction caché
+
+#+REVEAL_HTML: </div>
+
+
+#+BEGIN_NOTES
+1.
+2. exemple de la prédiction de l'immobilier
+3. par exemple un system qui prédit le prix du mobilier peut influencé le prix
+   du mobilier, sauf qu'il utilise le prix du mobilier pour construire ses modèles
+
+cite:sculley2015hidden
+#+END_NOTES
+
 *** Les modèles
+
+
 #+begin_quote
 *Dans un système complexes les modèles*
 1. sont influencés par les nouvelles données
@@ -111,34 +149,127 @@ l'apprentissage automatique et informatique. Il faut donc des équipes
 pluridisciplinaire.
 #+end_quote
 ** Une pipeline de travail pour un projet Machine Learning
-#+HTML: <img src="./figures/ml_gl_workflow.png" align="middle">
-** Quelques /Anti-Pattern/
+#+HTML: <img src="./figures/ml_gl_workflow.png" align="middle" width="140%">
+
+#+BEGIN_NOTES
+Maintenant qu'on a dit tous ca comment on travail sur un projet data science. On
+peut essayer de se donner un workflow.
+
+Mais c'est pas suffisent.
+
+Faire du machine learning c'est bien mais si ca ne va jamais en production ca ne
+sert a rien ! Il faut donc bien comprendre ce qu'est la production.
+
+cite:amershi2019software
+#+END_NOTES
+
 ** La production
 #+HTML: <img src="./figures/mem_prod.png" align="middle">
 
 #+BEGIN_NOTES
-Et donc la mise en prod
+La production c'est rendre notre système disponible accessible aux client !
+
+Quel sont les étapes importantes ?
 #+END_NOTES
 ** Les points clés de la production
-** Quelques solutions pour le déploiement en production
-* Un exemple
-** La problématique
-** Contraintes techniques clés
+:LOGBOOK:
+- Note taken on [2019-12-17 mar. 12:56] \\
+  définir les concepts du tableau après
+:END:
 
-#+ATTR_REVEAL: :frag (appear)
-- On veut le *moins de fausses détections possibles*. Pour ne pas engager des
-  poursuites judiciaires non fondées.
-- Le films *protégés* ne peuvent pas sortir de l'infrastructure du client
-- Le client protège environ *1000 films soit 2000 heures de vidéo*
-- Le client souhaite qualifier environs *100 films par jours*
-- Système du client existant est une *application monolithique* tournant sur une
-  machine linux
+*** Entraînement du modèle
+- offline par un data scientiste
+- Tous les jours à heure fixe
+- Sur un flux de données
+*** Prédiction du modèle
+- Tous les jours à heure fixe
+- A la demande d'un utilisateur
+- Sur un flux de données
+*** Gestion du système
+- Mesure les performances du modèle
+  - prédiction (precision du modèle)
+  - métier (indicateur metier)
+- Mesure de la qualité des données entrantes, est ce que les données entrantes dérivent ?
+*** Mise a jour du système
+- Comment déployer un nouveau modèle ?
+- Quand déployer un nouveau modèle ?
+** Quelques architectures d'une application /Machine Learning/
+
+|--------------+------------+--------------+----------------------|
+| /            | <          |              | >                    |
+|              | BD partagé | Rest Api     | Streaming            |
+|--------------+------------+--------------+----------------------|
+| Entraînement | Batch      | Batch        | Streaming            |
+|--------------+------------+--------------+----------------------|
+| Prédiction   | Batch      | A la demande | Streaming            |
+|--------------+------------+--------------+----------------------|
+| Exemple      | météo      | pub en ligne | Detection de fraudes |
+|--------------+------------+--------------+----------------------|
 
 #+BEGIN_NOTES
-Leur demandé quel question il manque !
+- Rest api
+- Streaming:
+  - necessite des techno qui gère des flux de données come Kafka
+  - a chaque fraude/faute detecté quand on a le feedback on peut réentréner le
+    modèle pour s'adaptéer à la situation
+#+END_NOTES
+*** Un exemple d'architecture
+#+HTML: <img src="./figures/example_architecture.jpg" align="middle">
+** Quelques /Anti-Pattern/
+* Un exemple
+
+#+BEGIN_NOTES
+Ce n'est pas du tout une méthode systématique pour consevoir, c'est juste
+l'étude d'un cas concret (Schneider Electric).
+
+Je vous exposer le problème technique, les contraintes et comment ils ont
+répondu au problème.
 #+END_NOTES
 
-** La preuve de concept
+** La problématique
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+
+#+HTML: <img src="./figures/smart_building.jpg" align="middle">
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+
+#+ATTR_REVEAL: :frag (appear)
+- 40% de l'energy modial est dépensé dans les batiments
+- optimization de la consomation energétique (energie renouvlable, batterie)
+- la première étape est de pouvoir *prédire la consomation d'un batiment*
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+On pose le decors. On S'attend a ce que les batiment de demain embarque du
+machine learning !
+
+Etre capable de prédire la consommation est la première étape.
+#+END_NOTES
+
+** Le contexte
+
+#+ATTR_REVEAL: :frag (appear)
+1. Équipe de R&D qui historiquement fait propose des prototype qui démondre une
+   faisabilité.
+2. Les clients ?
+   - d'autres equipes de l'entreprise
+   - des exterieurs à l'entreprise
+
+#+BEGIN_NOTES
+1. donc l'équipe n'est pas habitué à dévelloper des logiciels, à mettre en
+   production
+2. Questions très importante ! pourquoi on fait ca ?
+   - pour intégrer notre system dans une solution plus grande, on connait un peu
+     leur solution, on peut envisager un acompgnement
+   - pour en faire ce qu'ils veulent ! on rentre en concurence avec plein de
+     personne. En gros si on veux que ca se vendent ca à interet à etre bon !
+#+END_NOTES
+
+** L'équipe
+** Microservice Vs Monolitique
+** Rest API
 ** Comment valider ?
 ** Comment déployer ?
 ** Comment surveiller ?
