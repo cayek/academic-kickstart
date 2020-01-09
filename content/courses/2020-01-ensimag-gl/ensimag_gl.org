@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # -*- mode: org -*-
 
-#+TITLE: /Machine Learning/ en Production
+#+TITLE: Du /Machine Learning/ en Production
 #+AUTHOR: Kévin CAYE
 #+LANGUAGE: fr
 
@@ -28,7 +28,7 @@
 * Qui je suis ?
 - Ancien Ensimag (promotion 2014)
 - Thèse en méthodes statistiques pour la génétique
-- Prestataire de service chez Probayes
+- Consultant en /Machine Learning/
 
 #+BEGIN_NOTES
 - Donc pour moi le génie logiciel c'est un outils ! j'ai vaguement abbordé
@@ -46,7 +46,7 @@ Répondre aux questions:
 
 *Plan*
 
-1. Vue d'ensemble
+1. Du développement à la production
 2. Un Exemple
 
 #+BEGIN_NOTES
@@ -55,7 +55,7 @@ solution ! Du moins pour le client ! Donc la production et les utilisateur
 finaux doivent toujours être gardé en tète !
 #+END_NOTES
 
-* Vue d'ensemble
+* Du développement à la production
 ** /Machine learning/
 *Une définition pour un informaticien*
 
