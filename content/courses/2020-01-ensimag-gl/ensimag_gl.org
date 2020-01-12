@@ -27,8 +27,8 @@
 
 * Qui je suis ?
 - Ancien Ensimag (promotion 2014)
-- Thèse en méthodes statistiques pour la génétique
-- Consultant en /Machine Learning/
+- Thèse en méthodes statistiques appliquées à la génétique
+- /Data scientist/
 
 #+BEGIN_NOTES
 - Donc pour moi le génie logiciel c'est un outils ! j'ai vaguement abbordé
@@ -76,10 +76,13 @@ learn from data.
 #+HTML: <img src="./figures/traditional_workflow.png" align="middle">
 *** Exemple: approche /Machine Learning/ d'un filtre anti-spam
 #+HTML: <img src="./figures/ml_workflow.png" align="middle">
-** En quoi le /Machine Learning/ complique le développement logiciel ?
-
+** Le /Machine Learning/ prend très peu de place dans un projet
 
 #+HTML: <img src="./figures/ml_system.jpg" align="middle">
+
+#+ATTR_REVEAL: :frag (appear)
+
+En quoi le /Machine Learning/ complique le développement logiciel ?
 
 #+BEGIN_NOTES
 - ml représente une petite partie du système complet !
@@ -91,8 +94,19 @@ learn from data.
 
 ref: [[https://christophergs.github.io/machine%2520learning/2019/03/17/how-to-deploy-machine-learning-models/][1. Why are ML Systems Hard?]]
 #+END_NOTES
+** Les trois axes de changement dans un projets /Machine Learning/
 
-*** La dépendance au données coûte plus chère que la dépendance au code
+#+HTML: <img src="./figures/ml-axis-of-change.png" align="middle">
+
+#+BEGIN_NOTES
+En plus du code les données utilisé pour entraîner le modèle ainsi que les choix
+de modèle peuvent changer. Nos système doivent être capable de stocké et
+versionner les données et les modèle.
+
+ref: [[https://martinfowler.com/articles/cd4ml.html?utm_campaign=Data_Elixir&utm_medium=email&utm_source=Data_Elixir_250#ml-axis-of-change.png][the 3 axis of change in a Machine Learning application]]
+#+END_NOTES
+
+** La dépendance au données coûte plus chère que la dépendance au code
 
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
 
@@ -110,7 +124,6 @@ ref: [[https://christophergs.github.io/machine%2520learning/2019/03/17/how-to-de
 
 #+REVEAL_HTML: </div>
 
-
 #+BEGIN_NOTES
 1.
 2. exemple de la prédiction de l'immobilier
@@ -120,8 +133,45 @@ ref: [[https://christophergs.github.io/machine%2520learning/2019/03/17/how-to-de
 cite:sculley2015hidden
 #+END_NOTES
 
-*** Les modèles
+** La production
+#+HTML: <img src="./figures/mem_prod.png" align="middle">
 
+#+BEGIN_NOTES
+La production c'est rendre notre système disponible accessible aux client !
+
+Pour comprendre la complexité des projet de Machine Learning il faut parler des
+étapes importantes de la production.
+#+END_NOTES
+** Un exemple simple de mise en production d'un modèle
+
+#+HTML: <img src="./figures/team0.png" align="middle">
+
+#+BEGIN_NOTES
+C'est l'exemple le plus simple ou on entraîne un fois le modèle et on le
+déploie.
+#+END_NOTES
+** Qu'est ce qu'on déploie ?
+#+ATTR_REVEAL: :frag (appear)
+1. *Le modèle entraîné sérialisé*
+  #+BEGIN_SRC python
+  model = load("model.pkl")
+  #+END_SRC
+2. *Le code pour faire la prédiction:*
+  #+BEGIN_SRC python
+  def predict(data):
+      return model.predict(data)
+  #+END_SRC
+
+** Comment on le déploie ?
+#+HTML: <img src="./figures/monolithic_vs_microservice.png" align="middle">
+
+#+BEGIN_NOTES
+D'un coté on a un architecture micro service contre monolitique.
+
+On a coutume de faire des micro service
+#+END_NOTES
+** TODO Déploiement du modèle comme un /Web Service/
+** Les modèles                                                  :noexport:
 
 #+begin_quote
 *Dans un système complexes les modèles*
@@ -142,36 +192,53 @@ Par exemple:
 Donc on a un problème avec un des principe de base en génie logiciel: le
 découplage.
 #+END_NOTES
-*** L'équipe
-#+begin_quote
-*Construire et paramétré des modèles* requières d'avoir des connaissances en
-l'apprentissage automatique et informatique. Il faut donc des équipes
-pluridisciplinaire.
-#+end_quote
-** Une pipeline de travail pour un projet Machine Learning
-#+HTML: <img src="./figures/ml_gl_workflow.png" align="middle" width="140%">
+** L'équipe
 
-#+BEGIN_NOTES
-Maintenant qu'on a dit tous ca comment on travail sur un projet data science. On
-peut essayer de se donner un workflow.
+#+HTML: <img src="./figures/team_silo.png" align="middle">
 
-Mais c'est pas suffisent.
+#+begin_notes
+Donc ce genre de pratique fait appel a beaucoup de compétences
+#+end_notes
+** La culture /DevOps/
 
-Faire du machine learning c'est bien mais si ca ne va jamais en production ca ne
-sert a rien ! Il faut donc bien comprendre ce qu'est la production.
+#+HTML: <img src="./figures/devops.png" align="middle">
 
-cite:amershi2019software
-#+END_NOTES
+#+begin_notes
+Afin de réunir toutes ses compétences il y a une facon d'organisé les équipe
+basé sur la culture devops.
 
-** La production
-#+HTML: <img src="./figures/mem_prod.png" align="middle">
+DevOps vient de la contraction de dévelopement - opération. L'idée est de faire
+tout dans la mème équipe. On brise les silo et donc une un but précis on est
+meilleur.
+#+end_notes
+** TODO Une équipe pluridisciplinaire
 
-#+BEGIN_NOTES
-La production c'est rendre notre système disponible accessible aux client !
+mettre les slides de l'an dernier
+** TODO Valider un modèle
 
-Quel sont les étapes importantes ?
-#+END_NOTES
-** Les points clés de la production
+
+#+begin_notes
+Il faut une très grande rigueur dans la reproduction
+#+end_notes
+** Reproduire l'entraînement du modèle
+#+HTML: <img src="./figures/ml-pipeline-1.png" align="middle">
+
+#+begin_notes
+Il faut une très grande rigueur dans la reproduction du l'entrainement. Car on
+peut avoir a mettre a le modèle !
+
+On peut vouloir comparer les modèles entre eux.
+#+end_notes
+** TODO Mettre à jour un modèle en production
+*** Canary deploiment
+*** BlueGreen deploiment
+** TODO Tester un nouveau modèle avant de le déployer
+*** A/B test
+** TODO Un processus de deploiment continue pour le /Machine Learning/
+
+d'après citer
+
+** Les points clés de la production                               :noexport:
 :LOGBOOK:
 - Note taken on [2019-12-17 mar. 12:56] \\
   définir les concepts du tableau après
@@ -190,10 +257,10 @@ Quel sont les étapes importantes ?
   - prédiction (precision du modèle)
   - métier (indicateur metier)
 - Mesure de la qualité des données entrantes, est ce que les données entrantes dérivent ?
-*** Mise a jour du système
+*** Mise à jour du système
 - Comment déployer un nouveau modèle ?
 - Quand déployer un nouveau modèle ?
-** Quelques architectures d'une application /Machine Learning/
+** Quelques architectures d'une application /Machine Learning/    :noexport:
 
 |--------------+------------+--------------+----------------------|
 | /            | <          |              | >                    |
@@ -215,8 +282,35 @@ Quel sont les étapes importantes ?
 #+END_NOTES
 *** Un exemple d'architecture
 #+HTML: <img src="./figures/example_architecture.jpg" align="middle">
-** Quelques /Anti-Pattern/
-* Un exemple
+** Une pipeline de travail pour un projet Machine Learning        :noexport:
+#+HTML: <img src="./figures/ml_gl_workflow.png" align="middle" width="140%">
+
+#+BEGIN_NOTES
+Maintenant qu'on a dit tous ca comment on travail sur un projet data science. On
+peut essayer de se donner un workflow.
+
+Mais c'est pas suffisent.
+
+Faire du machine learning c'est bien mais si ca ne va jamais en production ca ne
+sert a rien ! Il faut donc bien comprendre ce qu'est la production.
+
+cite:amershi2019software
+#+END_NOTES
+
+** TODO Quelques /Anti-Pattern/ cite:sculley2015hidden
+*** /Glue Code/
+*Desciption*
+- On utilise des solutions génériques pour faire en /machine learning/ (exemple:
+  /sklearn/, /keras/)
+- On code pour faire marcher différentes briques ensembles
+
+*Problèmes*
+- Système est gélé, on ne veux pas tester d'autre alternative
+
+*Une solution ?*
+- Développer la solution complète peut être moins couteaux
+*** /Pipeline Jungles/
+* Un exemple                                                       :noexport:
 
 #+BEGIN_NOTES
 Ce n'est pas du tout une méthode systématique pour consevoir, c'est juste
@@ -248,7 +342,7 @@ machine learning !
 Etre capable de prédire la consommation est la première étape.
 #+END_NOTES
 
-** Le contexte
+** Le contexte                                                    :noexport:
 
 #+ATTR_REVEAL: :frag (appear)
 1. Équipe de R&D qui historiquement fait propose des prototype qui démondre une
@@ -267,9 +361,6 @@ Etre capable de prédire la consommation est la première étape.
      personne. En gros si on veux que ca se vendent ca à interet à etre bon !
 #+END_NOTES
 
-** L'équipe
-** Microservice Vs Monolitique
-** Rest API
 ** Comment valider ?
 ** Comment déployer ?
 ** Comment surveiller ?
@@ -279,7 +370,11 @@ Etre capable de prédire la consommation est la première étape.
 * Références
 - cite:geron2017hands
 - cite:amershi2019software
+- cite:sculley2015hidden
 - [[https://blog.acolyer.org/2019/07/08/software-engineering-for-machine-learning/][Morning paper: Software engineering for machine learning: a case study]]
+- [[https://martinfowler.com/articles/cd4ml.html?utm_campaign=Data_Elixir&utm_medium=email&utm_source=Data_Elixir_250][Continuous Delivery for Machine Learning]]
+- [[https://fr.slideshare.net/turi-inc/machine-learning-in-production][Machine learning in production]]
+- [[https://docs.oracle.com/fr/solutions/learn-architect-microservice/index.html#GUID-1A9ECC2B-F7E6-430F-8EDA-911712467953][Différences entre les microservices et l'architecture unilithic]]
 
 #+REVEAL: split
 bibliography:~/bibliotheque/bibliotheque.bib
