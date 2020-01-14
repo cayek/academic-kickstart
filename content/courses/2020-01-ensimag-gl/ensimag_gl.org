@@ -31,17 +31,15 @@
 - /Data scientist/ depuis deux ans
 
 #+BEGIN_NOTES
-- Donc pour moi le génie logiciel c'est un outils ! j'ai vaguement abbordé
+- Donc pour moi le génie logiciel c'est un outils ! j'ai vaguement abordé
   ca à l'ensimag ....
 - Mais c'est indispensable dans mon travail
 #+END_NOTES
-* Plan et objectifs
-
-*Objectifs*
+* Objectif
 
 Répondre à la question:
-- Comment déployer une solution logiciel utilisant un modèle d'intelligence
-  artificiel en production ❓
+- Comment déployer un logiciel utilisant un modèle d'intelligence artificielle
+  en production ❓
 
 #+BEGIN_NOTES
 Pour ca on va essayer de balayer les différentes spécificité des projets machine
@@ -58,23 +56,28 @@ learn from data.
 #+end_quote
 
 #+ATTR_REVEAL: :frag (appear)
-*Quant utiliser le /machine learning/*
+*Quant utiliser le /machine learning/ ?*
 #+ATTR_REVEAL: :frag (appear)
 - les problèmes résolus en énumérant un grand nombre de règles
-- les problèmes très complexes ou trouver toutes les règles serait impossible
-- les problèmes ou les règles peuvent changer, ou il faut s'adapter à de
+- les problèmes très complexes où trouver toutes les règles serait impossible
+- les problèmes où les règles peuvent changer, où il faut s'adapter à de
   nouvelles données
+
+#+BEGIN_NOTES
+- les spams
+- la reconnaissance de visage
+- la detection de fraude bancaire
+#+END_NOTES
 
 *** Exemple: approche traditionnelle d'un filtre anti-spam
 #+HTML: <img src="./figures/traditional_workflow.png" align="middle">
 *** Exemple: approche /Machine Learning/ d'un filtre anti-spam
 #+HTML: <img src="./figures/ml_workflow.png" align="middle">
-** Le /Machine Learning/ prend très peu de place dans un projet
+** Le /Machine Learning/ prend très peu de place
 
 #+HTML: <img src="./figures/ml_system.jpg" align="middle">
 
 #+ATTR_REVEAL: :frag (appear)
-
 En quoi le /Machine Learning/ complique le développement logiciel ?
 
 #+BEGIN_NOTES
@@ -94,9 +97,11 @@ ref: [[https://christophergs.github.io/machine%2520learning/2019/03/17/how-to-de
 #+HTML: <img src="./figures/ml-axis-of-change.png" align="middle">
 
 #+BEGIN_NOTES
-En plus du code les données utilisé pour entraîner le modèle ainsi que les choix
-de modèle peuvent changer. Nos systèmes doivent être capable de stocker et
-versionner les données et les modèles.
+- Un project machine learning est composé de 3 choses ....
+- En plus du code les données utilisé pour entraîner le modèle ainsi que les
+  choix de modèle peuvent changer.
+- Nos systèmes doivent être capable de stocker et versionner les données et les
+  modèles.
 
 ref: [[https://martinfowler.com/articles/cd4ml.html?utm_campaign=Data_Elixir&utm_medium=email&utm_source=Data_Elixir_250#ml-axis-of-change.png][the 3 axis of change in a Machine Learning application]]
 #+END_NOTES
@@ -105,20 +110,21 @@ ref: [[https://martinfowler.com/articles/cd4ml.html?utm_campaign=Data_Elixir&utm
 #+HTML: <img src="./figures/mem_prod.png" align="middle">
 
 #+BEGIN_NOTES
-Pour comprendre la suite il faut d'abord définir la production
-
-Faire un petit script avec du ml tout le monde peut le faire.
-
-Mettre en production c'est rendre notre système disponible accessible aux client !
-
+- Pour comprendre la suite il faut d'abord définir la production
+- Faire un petit script avec du ml tout le monde peut le faire.
+- Mettre en production c'est rendre notre système disponible accessible aux
+  client !
 #+END_NOTES
+
 ** Un exemple simple de mise en production d'un modèle
 
 #+HTML: <img src="./figures/team0.png" align="middle">
 
 #+BEGIN_NOTES
-C'est l'exemple le plus simple ou on entraîne un fois le modèle et on le
-déploie.
+- C'est l'exemple le plus simple ou on entraîne un fois le modèle et on le
+  déploie.
+- qui a déja entrainé un modèle de ml ?
+- qui en a déjà déployé un ?
 #+END_NOTES
 ** Qu'est ce qu'on déploie ?
 #+ATTR_REVEAL: :frag (appear)
@@ -136,25 +142,21 @@ déploie.
 #+HTML: <img src="./figures/monolithic_vs_microservice.png" align="middle">
 
 #+BEGIN_NOTES
-D'un coté on a un architecture micro service contre monolitique.
-
-On a coutume de faire des micro service car les enviromment qui font du machine
-leaning font appel à des stack logiciel très particulière (numpy + tensorflow
-par exemple) qui peut être très différents du reste du système il est donc
-préférable de l'isoler pour bien la controler.
+- D'un coté on a une architecture micro service contre monolitique.
+- On a coutume de faire des micro service car les enviromment qui font du
+  machine leaning font appel à des stack logiciel très particulière (numpy +
+  tensorflow par exemple) qui peut être très différents du reste du système.
+- il est donc préférable de l'isoler pour bien la controler.
 #+END_NOTES
 ** Déploiement du modèle comme un /Web Service/
-#+HTML: <img src="./figures/components.png" align="middle">
-
+#+HTML: <img src="./figures/components.png" align="middle" width="45%">
 
 #+BEGIN_NOTES
-Le client accède au function du modèle grace à une api !
-
-Cette interface ne dois pas changer pour assurer la compatibilité avec le
-client.
-
-Ok donc on arrive déployé des modèle simple mais pourquoi c'st si dure le MLM en
-production?
+- Le client accède au function du modèle grace à une api !
+- Cette interface ne dois pas changer pour assurer la compatibilité avec le
+  client.
+- Ok donc on arrive déployé des modèle simple mais pourquoi c'st si dure le MLM
+  en production?
 #+END_NOTES
 
 ** Les modèles                                                  :noexport:
@@ -183,65 +185,90 @@ découplage.
 #+HTML: <img src="./figures/team_silo.png" align="middle">
 
 #+begin_notes
-Déjà pour ce cas simple il faut beaucoup de compétences
+- Déjà pour ce cas simple il faut beaucoup de compétences
+- en plus c'est des gens qui ne parle pas forcément la meme langue
+- data scientist on fait des maths de la modélisation
+- les informaticiens
+- *avantage* ensimag on est à mi chemain entre les deux
+- en data science plus que jamais c'est util
 #+end_notes
+
 ** L'équipe
 #+HTML: <img src="./figures/dev_ops.png" width="100%">
 
-
 #+begin_notes
-Historiquement les data scientist sont très loin de des gens qui organise le
-déploiement de la solution logiciel.
-
-On avait une organisation en silo.
-
+- Historiquement les data scientist sont très loin de des gens qui organise le
+  déploiement de la solution logiciel.
+- On avait une organisation en silo.
+- data scientist plutot recherche
+- developper plutot production
 #+end_notes
 ** La culture /DevOps/
 
-#+HTML: <img src="./figures/devops_cycle.png" align="middle">
+#+HTML: <img src="./figures/devops_cycle.png" align="middle" width="60%">
 
 #+begin_notes
-Afin de réunir toutes ses compétences il y a une facon d'organisé les équipe
-basé sur la culture devops.
-
-DevOps vient de la contraction de dev (ceux qui développe la solution) - ops
-(ceux qui gère les infrastructure de production). L'idée est de faire tout dans
-la mème équipe.
-
-On brise les silo et L'équipe est organisé autour d'un but précis! déployer un
-web service avec du machine learning dedans !
-
+- heuresement le devops est apparu
+- DevOps vient de la contraction de dev (ceux qui développe la solution) - ops
+  (ceux qui gère les infrastructure de production)
+- L'idée est de réunir toute les compétence pour faire ce cycle complet dans la
+  même équipe
+- On brise les silo et L'équipe est organisé autour d'un but précis! déployer un
+  web service avec du machine learning dedans !
+- on entend aussi parlé de "devops" comme un role dans une équipe
+- par abus de language c'est les personne qui font le lien entre la production
+  et le dev
+- ils mettent en place les outils pour l'intégration continue
+- les vérification automatique pour évaluer la qualité
 #+end_notes
 
 ** Une équipe pluridisciplinaire
 
 #+HTML: <img src="./figures/devops.png" width="100%">
 
+#+BEGIN_NOTES
+- *dans notre cas*
+- mains dans la mains les développeurs et les data scientist mettre en
+  production leur solution
+- et dans l'équipe les roles peuvent tourner
+- par exemple j'ai déjà des taches purement data science ou il faut entrainer des modèle faire des algos de traitement de données
+- et dans la même équipe evaluer une nouvelle plateforme de production pour
+  deployer nos modèles
+- les deux sont interessant et permettent de voir toute de compétence
+#+END_NOTES
+
 ** La mise à jour du modèle
 #+HTML: <img src="./figures/ml-pipeline-1.png" align="middle">
 
 #+begin_notes
-On a résussi a deployer un modèle une fois. Mais que ce passe t il si on veut
-mettre à jour le modèle ? Il faut s'organiser pour ca !
-
-Il faut une très grande rigueur dans la reproduction du l'entrainement.
-
-On peut vouloir comparer les modèles entre eux.
+- On a résussi a deployer un modèle une fois.
+- Voir meme de facon automatique
+- Mais que ce passe t il si on veut mettre à jour le modèle ? Il faut
+  s'organiser pour ca !
+- Il faut une très grande rigueur dans la reproduction du l'entrainement.
+- On peut vouloir comparer les modèles entre eux.
+- dans lentrainement on peut distinguer les 3 étapes
+- et il faut que c'est étape soit reproductible et puisse se lancer
+  automatiquement si on ne veux pas avoir a intervenir lors de chaque mise a
+  jours du modèle
 #+end_notes
 ** Mettre à jour un modèle en production
 
 #+HTML: <img src="./figures/canary-release-2.png" align="middle">
 
 #+begin_notes
-Notre nouveau modèle est près comment on met à jour la production ?
-
-C'est pas une problématique propre au machine learning.
-
-Une stratégie possible est de ne déployé que pour 5% des utilisateurs
+- Notre nouveau modèle est près comment on met à jour la production ?
+- C'est pas une problématique propre au machine learning.
+- Une stratégie possible est de ne déployé que pour 5% des utilisateurs
+- et on vérifie que notre modèle est toujours bon
+- comment on mesure le bon ?
+- ca dépend du problème
+- Par exemple pour de la pub en ligne on mesure le nombre de clic sur nos bannière
 #+end_notes
+
 ** Tester un nouveau modèle avant de le déployer                  :noexport:
 *** A/B test
-** La dépendance au données coûte plus chère que la dépendance au code
+** La dépendance aux données coûte plus chère que la dépendance au code
 
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
 
@@ -259,30 +286,31 @@ Une stratégie possible est de ne déployé que pour 5% des utilisateurs
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
-Enfin une des particularité est système employant le machine learning est la
-dépendance aux données.
+- Enfin une des particularité est système employant le machine learning est la
+  dépendance aux données.
+- c'est une vulnérabilité qu'il faut apprendre a gérer
 
 1. Comme par exemple si un modèle prend en entré des prédiction d'un autre
-   modèle. Si cette autre modèle est mis a jours on peut avoir a changer notre
-   modèle.
-
-   Les données peuvent aussi venir d'un autre composent géré par une autre
-   équipe.
-
-   Une solution est de fixé et versionner les données utilisé, il
-   faut dont pouvoir gerer ca.
+  modèle. Si cet autre modèle est mis a jours on peut avoir a changer notre
+  modèle.
+  - Les données peuvent aussi venir d'un autre composent géré par une autre
+  équipe.
+  - Une solution est de fixé et versionner les données utilisé, il
+  faut dont pouvoir gerer ca.
 2. Detecter une dépendance à un package peut utilisé est facile. Par contre pour
-   des données peut utilisé c'est plus dure. Le problème c'est que chaque
-   dépendence à des données peu utile laisse une vulnérabilité inutile.
+  des données peut utilisé c'est plus dure.
+  - ou des données peuvent apporter vraiment peu de chose
+  - Le problème c'est que chaque dépendence à des données peu utile laisse une
+    vulnérabilité inutile.
 3. que ce soit au moment de l'entrainement ou de la prédiction. C'est une entré
-   pour nos utilisateurs. Cette entré peut faire tomber notre système.
+  pour nos utilisateurs. Cette entré peut faire tomber notre système.
 
 Il faut donc etre très précocionneur quand on traite des données.
 
 cite:sculley2015hidden
 #+END_NOTES
 
-** Un processus de deploiment continue pour le /Machine Learning/
+** Un processus de déploiement continu pour le /Machine Learning/
 
 #+HTML: <img src="./figures/cd4ml-end-to-end.png" align="middle">
 
@@ -368,32 +396,31 @@ cite:amershi2019software
 
 * Quelques anti-patrons
 
-#+HTML: <img src="./figures/tech_debt.jpg" align="middle">
+#+HTML: <img src="./figures/tech_debt.jpg" align="middle" width="45%">
 
 #+BEGIN_NOTES
-les anti-patrons ou antipatterns sont des erreurs courantes de conception des
-logiciels.
-
-C'est eux qui creer ce qu'on appel de la dête technique. C'est le temps qu'on va
-devoir supplémentaire passer dans le futur pour continuer à faire vivre notre
-système mal conçu !
-
+- les anti-patrons ou antipatterns sont des erreurs courantes de conception des
+  logiciels.
+- C'est eux qui creer ce qu'on appel de la dête technique.
+- C'est le temps qu'on va devoir supplémentaire passer dans le futur pour
+  continuer à faire vivre notre système mal conçu !
 #+END_NOTES
-** TODO Boucle d'interaction
+
+** TODO Boucle d'interaction                                      :noexport:
 
 ** /Glue Code/
 
 #+ATTR_REVEAL: :frag (appear)
 1. *Desciption*
-   - On utilise des solutions génériques pour faire en /machine learning/
+   - On utilise des solutions génériques pour faire le /machine learning/
      (exemple: /sklearn/, /keras/)
    - On code pour faire marcher différentes briques ensembles
 2. *Problèmes*
    - Système est gélé, on ne veux pas tester d'autres alternatives
-   - On a du mal à intégrer la logique metier dans le code
+   - On a du mal à intégrer la logique métier dans le code
 3. *Une solution*
    - Développer la solution complète peut être moins coûteux
-   - Développer des interface au dessus de paquets /black box/
+   - Développer des interfaces au dessus de paquets /black box/
 
 #+BEGIN_NOTES
 Un premier anti patron est ce qui est appelé le glue code en anglais. C'est le
@@ -404,42 +431,48 @@ code ciment
 2. Par exemple on peut avoir du mal a modifier la fonction objectif pour
    integrer la logique metier.
 3. Ca permet d'avoir un système plus robuste au changement
-
+4. Exemple: j'ai travaillé 2 ans pour SE on délivrais des composant analytics.
+   C'était simplement des algo bien connue du machine learning encapsulé.
+5. le gros du travaille était dans l'interface
 #+END_NOTES
 
 ** /Pipeline Jungles/
 #+ATTR_REVEAL: :frag (appear)
 1. *Desciption*
-   - les données doivent être arrangé pour être compatible avec les api des modèles
-   - on creer beaucoup de nouvelle caractéristique
+   - les données doivent être arrangées pour être compatible avec les api des
+     modèles
+   - on créer beaucoup de nouveaux /features/
 2. *Problèmes*
-   - quand des nouvelles données arrive ont ne factorise pas forcement tous
-   - plus la /pipeline data/ est complexe plus elle sera dure a maintenir et debugger
+   - quand des nouvelles données arrivent ont ne refactorise pas forcement
+     toutes la /pipeline/
+   - plus la /pipeline data/ est complexe plus elle sera dure a maintenir et
+     debugger
 3. *Une solution*
    - Il faut repenser la /pipeline/ des données depuis le début
 ** Code expérimental mort
 #+ATTR_REVEAL: :frag (appear)
 1. *Desciption*
-   - Une conséquence des anti-patrons /Pipeline jungles/ et /glue code/, il peut
-     être intéressant d'utiliser des branchements conditionnels pour faire des
-     expériences.
+   - Une conséquence des anti-patrons /Pipeline jungles/ et /glue code/ est
+     qu'il peut être intéressant d'utiliser des branchements conditionnels pour
+     faire des expériences.
 2. *Problèmes*
-   - Les branchements conditionnel rende les compatibilités complexe
+   - Les branchements conditionnels rendent la retrocompatibilité complexe
+   - le code trop complexe
 3. *Une solution*
    - Il faut éviter ce genre de branchement
    - examiner le code périodiquement et supprimer ceux qui sont mort
-#+BEGIN_NOTES
-#+END_NOTES
 
 ** Manque d'abstraction
 1. *Desciption*
-   - Pas d'abstraction commune pour décrire les système reposant sur le /Machine learning/
+   - Pas d'abstraction commune pour décrire les systèmes /Machine learning/
 2. *Problèmes*
    - Les abstractions sont à la base du génie logiciel
 
    #+BEGIN_NOTES
    1. manque des fameux design pattern
-   2. c'est ce qu'on fait en gl et qui nous permet de construire des système robuste au changement
+   2. c'est ce qu'on fait en gl et qui nous permet de construire des système
+      robuste au changement
+   - C'est pour ca que j'atait bien embété pour faire ce cours :D
    #+END_NOTES
 
 ** Un exemple de patron: /Map-reduce/
@@ -449,15 +482,12 @@ code ciment
 #+BEGIN_NOTES
 C'est un patron très utilisé pour le calcule parallèle sur plusieurs machine
 
-Pour ce patron on a deux fonction
+Pour ce patron on a deux fonctions
 - =map= qui permet de distribuer le travail sur différent noeud
 - =reduce= qui permet calculer le resultat sur chaque cluster
-
-Ce design pattern fucntion très bien pour beaucoup de traitement de données.
-Mais pas pour l'apprentissage
-
+- Ce design pattern fucntion très bien pour beaucoup de traitement de données.
+- Mais pas pour l'apprentissage en séquence
 #+END_NOTES
-
 
 * Un exemple                                                       :noexport:
 
@@ -516,10 +546,8 @@ Etre capable de prédire la consommation est la première étape.
 ** Comment faire évoluer ?
 ** Comment faire de l'intégration/déploiement continue ?
 * Références
-- cite:geron2017hands
-- cite:amershi2019software
-- cite:sculley2015hidden
-- [[https://blog.acolyer.org/2019/07/08/software-engineering-for-machine-learning/][Morning paper: Software engineering for machine learning: a case study]]
+- [[https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/][Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow]]
+- [[https://papers.nips.cc/paper/5656-hidden-technical-debt-in-machine-learning-systems][Hidden Technical Debt in Machine Learning Systems]]
 - [[https://martinfowler.com/articles/cd4ml.html?utm_campaign=Data_Elixir&utm_medium=email&utm_source=Data_Elixir_250][Continuous Delivery for Machine Learning]]
 - [[https://fr.slideshare.net/turi-inc/machine-learning-in-production][Machine learning in production]]
 - [[https://docs.oracle.com/fr/solutions/learn-architect-microservice/index.html#GUID-1A9ECC2B-F7E6-430F-8EDA-911712467953][Différences entre les microservices et l'architecture unilithic]]
