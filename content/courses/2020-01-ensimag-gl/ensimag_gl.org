@@ -48,6 +48,10 @@ learning.
 
 * Du développement à la production
 ** /Machine learning/
+
+#+HTML: <img src="./figures/ds_meme.png" align="middle">
+
+** /Machine learning/
 *Une définition pour un informaticien*
 
 #+begin_quote
@@ -268,7 +272,7 @@ découplage.
 
 ** Tester un nouveau modèle avant de le déployer                  :noexport:
 *** A/B test
-** La dépendance aux données coûte plus chère que la dépendance au code
+** La dépendance aux données coûte plus cher que la dépendance au code
 
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
 
@@ -279,7 +283,7 @@ découplage.
 #+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
 
 #+ATTR_REVEAL: :frag (appear)
-1. Les données peuvent être instable
+1. Les données peuvent être instables
 2. Il est difficile de détecter des données peu utilisées
 3. Chaque nouvelle donnée ouvre une vulnérabilité
 
@@ -414,7 +418,7 @@ cite:amershi2019software
 1. *Desciption*
    - On utilise des solutions génériques pour faire le /machine learning/
      (exemple: /sklearn/, /keras/)
-   - On code pour faire marcher différentes briques ensembles
+   - On code pour faire marcher différentes briques ensemble
 2. *Problèmes*
    - Système est gélé, on ne veux pas tester d'autres alternatives
    - On a du mal à intégrer la logique métier dans le code
@@ -443,9 +447,9 @@ code ciment
      modèles
    - on créer beaucoup de nouveaux /features/
 2. *Problèmes*
-   - quand des nouvelles données arrivent ont ne refactorise pas forcement
-     toutes la /pipeline/
-   - plus la /pipeline data/ est complexe plus elle sera dure a maintenir et
+   - quand des nouvelles données arrivent ont ne refactorise pas forcément
+     toutes la /pipeline data/
+   - plus la /pipeline data/ est complexe plus elle sera dure à maintenir et
      debugger
 3. *Une solution*
    - Il faut repenser la /pipeline/ des données depuis le début
