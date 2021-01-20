@@ -1,0 +1,560 @@
+# -*- coding: utf-8 -*-
+# -*- mode: org -*-
+
+#+TITLE: Du /Machine Learning/ en Production
+#+AUTHOR: Kévin CAYE
+#+LANGUAGE: fr
+
+# reveal options: see https://github.com/yjwen/org-reveal
+# #+REVEAL_ROOT: ../js/reveal.js/
+#+REVEAL_TRANS: none
+#+REVEAL_PLUGINS: (highlight notes)
+#+OPTIONS: reveal_center:nil reveal_progress:t reveal_history:nil reveal_control:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil toc:nil
+#+OPTIONS: reveal_width:1200 reveal_height:800
+#+REVEAL_THEME: white
+#+REVEAL_HLEVEL: 1 ## all header on same lvl
+#+REVEAL_SPEED: fast
+#+REVEAL_EXTRA_CSS: ./extra.css
+#+REVEAL_EXTRA_JS:
+
+
+#+BEGIN_SRC emacs-lisp :eval no-export :exports none
+(execute-kbd-macro "\C-c\C-evv")
+#+END_SRC
+
+#+RESULTS:
+
+* Qui je suis ?
+- Ancien Ensimag (promotion 2014)
+- Thèse en méthodes statistiques appliquées à la génétique
+- /Data scientist/ depuis deux ans
+
+#+BEGIN_NOTES
+- Donc pour moi le génie logiciel c'est un outils ! j'ai vaguement abordé
+  ca à l'ensimag ....
+- Mais c'est indispensable dans mon travail
+#+END_NOTES
+* Objectif
+
+Répondre à la question:
+- Comment déployer un logiciel utilisant un modèle d'intelligence artificielle
+  en production ❓
+
+#+BEGIN_NOTES
+Pour ca on va essayer de balayer les différentes spécificité des projets machine
+learning.
+#+END_NOTES
+
+* Du développement à la production
+** /Machine learning/
+
+#+HTML: <img src="./figures/ds_meme.png" align="middle">
+
+** /Machine learning/
+*Une définition pour un informaticien*
+
+#+begin_quote
+Machine Learning is the science (and art) of programming computers so they can
+learn from data.
+#+end_quote
+
+#+ATTR_REVEAL: :frag (appear)
+*Quant utiliser le /machine learning/ ?*
+#+ATTR_REVEAL: :frag (appear)
+- les problèmes résolus en énumérant un grand nombre de règles
+- les problèmes très complexes où trouver toutes les règles serait impossible
+- les problèmes où les règles peuvent changer, où il faut s'adapter à de
+  nouvelles données
+
+#+BEGIN_NOTES
+- les spams
+- la reconnaissance de visage
+- la detection de fraude bancaire
+#+END_NOTES
+
+*** Exemple: approche traditionnelle d'un filtre anti-spam
+#+HTML: <img src="./figures/traditional_workflow.png" align="middle">
+*** Exemple: approche /Machine Learning/ d'un filtre anti-spam
+#+HTML: <img src="./figures/ml_workflow.png" align="middle">
+** Le /Machine Learning/ prend très peu de place
+
+#+HTML: <img src="./figures/ml_system.jpg" align="middle">
+
+#+ATTR_REVEAL: :frag (appear)
+En quoi le /Machine Learning/ complique le développement logiciel ?
+
+#+BEGIN_NOTES
+- ml représente une petite partie du système complet !
+- le premier déploiement peut être simple
+- par contre si on pense pas le système complet la dette technique arrive avec
+  - la maintenance
+  - la mise a jours des modèles
+  - le monitoring des modèles
+
+On va essayer dans la suite de balayer ces différents aspects
+
+ref: [[https://christophergs.github.io/machine%2520learning/2019/03/17/how-to-deploy-machine-learning-models/][1. Why are ML Systems Hard?]]
+#+END_NOTES
+** Les trois axes de changement dans un projets /Machine Learning/
+
+#+HTML: <img src="./figures/ml-axis-of-change.png" align="middle">
+
+#+BEGIN_NOTES
+- Un project machine learning est composé de 3 choses ....
+- En plus du code les données utilisé pour entraîner le modèle ainsi que les
+  choix de modèle peuvent changer.
+- Nos systèmes doivent être capable de stocker et versionner les données et les
+  modèles.
+
+ref: [[https://martinfowler.com/articles/cd4ml.html?utm_campaign=Data_Elixir&utm_medium=email&utm_source=Data_Elixir_250#ml-axis-of-change.png][the 3 axis of change in a Machine Learning application]]
+#+END_NOTES
+
+** La production
+#+HTML: <img src="./figures/mem_prod.png" align="middle">
+
+#+BEGIN_NOTES
+- Pour comprendre la suite il faut d'abord définir la production
+- Faire un petit script avec du ml tout le monde peut le faire.
+- Mettre en production c'est rendre notre système disponible accessible aux
+  client !
+#+END_NOTES
+
+** Un exemple simple de mise en production d'un modèle
+
+#+HTML: <img src="./figures/team0.png" align="middle">
+
+#+BEGIN_NOTES
+- C'est l'exemple le plus simple ou on entraîne un fois le modèle et on le
+  déploie.
+- qui a déja entrainé un modèle de ml ?
+- qui en a déjà déployé un ?
+#+END_NOTES
+** Qu'est ce qu'on déploie ?
+#+ATTR_REVEAL: :frag (appear)
+1. *Le modèle entraîné sérialisé*
+  #+BEGIN_SRC python
+  model = load("model.pkl")
+  #+END_SRC
+2. *Le code pour faire la prédiction:*
+  #+BEGIN_SRC python
+  def predict(data):
+      return model.predict(data)
+  #+END_SRC
+
+** Comment on le déploie ?
+#+HTML: <img src="./figures/monolithic_vs_microservice.png" align="middle">
+
+#+BEGIN_NOTES
+- D'un coté on a une architecture micro service contre monolitique.
+- On a coutume de faire des micro service car les enviromment qui font du
+  machine leaning font appel à des stack logiciel très particulière (numpy +
+  tensorflow par exemple) qui peut être très différents du reste du système.
+- il est donc préférable de l'isoler pour bien la controler.
+#+END_NOTES
+** Déploiement du modèle comme un /Web Service/
+#+HTML: <img src="./figures/components.png" align="middle" width="45%">
+
+#+BEGIN_NOTES
+- Le client accède au function du modèle grace à une api !
+- Cette interface ne dois pas changer pour assurer la compatibilité avec le
+  client.
+- Ok donc on arrive déployé des modèle simple mais pourquoi c'st si dure le MLM
+  en production?
+#+END_NOTES
+
+** Les modèles                                                  :noexport:
+
+#+begin_quote
+*Dans un système complexes les modèles*
+1. sont influencés par les nouvelles données
+2. sont compliqués a couplés et étendre
+3. ont des interaction complexe entre eux
+#+end_quote
+
+#+BEGIN_NOTES
+Par exemple:
+1. exemple de google traduction
+2. un modèle qui reconnaît des image et un modèle devine la suite de la phrase ne
+   donne pas un modèle qui écrit des légende d'image
+3. exemple d'un modèle de prédiction de la météo et de prédiction de la
+   consonassions d'un bâtiment. L'erreur du model1 doit être connu et elle est
+   importante lors de l'apprentissage !
+
+Donc on a un problème avec un des principe de base en génie logiciel: le
+découplage.
+#+END_NOTES
+** L'équipe
+
+#+HTML: <img src="./figures/team_silo.png" align="middle">
+
+#+begin_notes
+- Déjà pour ce cas simple il faut beaucoup de compétences
+- en plus c'est des gens qui ne parle pas forcément la meme langue
+- data scientist on fait des maths de la modélisation
+- les informaticiens
+- *avantage* ensimag on est à mi chemain entre les deux
+- en data science plus que jamais c'est util
+#+end_notes
+
+** L'équipe
+#+HTML: <img src="./figures/dev_ops.png" width="100%">
+
+#+begin_notes
+- Historiquement les data scientist sont très loin de des gens qui organise le
+  déploiement de la solution logiciel.
+- On avait une organisation en silo.
+- data scientist plutot recherche
+- developper plutot production
+#+end_notes
+** La culture /DevOps/
+
+#+HTML: <img src="./figures/devops_cycle.png" align="middle" width="60%">
+
+#+begin_notes
+- heuresement le devops est apparu
+- DevOps vient de la contraction de dev (ceux qui développe la solution) - ops
+  (ceux qui gère les infrastructure de production)
+- L'idée est de réunir toute les compétence pour faire ce cycle complet dans la
+  même équipe
+- On brise les silo et L'équipe est organisé autour d'un but précis! déployer un
+  web service avec du machine learning dedans !
+- on entend aussi parlé de "devops" comme un role dans une équipe
+- par abus de language c'est les personne qui font le lien entre la production
+  et le dev
+- ils mettent en place les outils pour l'intégration continue
+- les vérification automatique pour évaluer la qualité
+#+end_notes
+
+** Une équipe pluridisciplinaire
+
+#+HTML: <img src="./figures/devops.png" width="100%">
+
+#+BEGIN_NOTES
+- *dans notre cas*
+- mains dans la mains les développeurs et les data scientist mettre en
+  production leur solution
+- et dans l'équipe les roles peuvent tourner
+- par exemple j'ai déjà des taches purement data science ou il faut entrainer des modèle faire des algos de traitement de données
+- et dans la même équipe evaluer une nouvelle plateforme de production pour
+  deployer nos modèles
+- les deux sont interessant et permettent de voir toute de compétence
+#+END_NOTES
+
+** La mise à jour du modèle
+#+HTML: <img src="./figures/ml-pipeline-1.png" align="middle">
+
+#+begin_notes
+- On a résussi a deployer un modèle une fois.
+- Voir meme de facon automatique
+- Mais que ce passe t il si on veut mettre à jour le modèle ? Il faut
+  s'organiser pour ca !
+- Il faut une très grande rigueur dans la reproduction du l'entrainement.
+- On peut vouloir comparer les modèles entre eux.
+- dans lentrainement on peut distinguer les 3 étapes
+- et il faut que c'est étape soit reproductible et puisse se lancer
+  automatiquement si on ne veux pas avoir a intervenir lors de chaque mise a
+  jours du modèle
+#+end_notes
+** Mettre à jour un modèle en production
+
+#+HTML: <img src="./figures/canary-release-2.png" align="middle">
+
+#+begin_notes
+- Notre nouveau modèle est près comment on met à jour la production ?
+- C'est pas une problématique propre au machine learning.
+- Une stratégie possible est de ne déployé que pour 5% des utilisateurs
+- et on vérifie que notre modèle est toujours bon
+- comment on mesure le bon ?
+- ca dépend du problème
+- Par exemple pour de la pub en ligne on mesure le nombre de clic sur nos bannière
+#+end_notes
+
+** Tester un nouveau modèle avant de le déployer                  :noexport:
+*** A/B test
+** La dépendance aux données coûte plus cher que la dépendance au code
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+
+#+HTML: <img src="./figures/xkcd_data.png" align="middle">
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+
+#+ATTR_REVEAL: :frag (appear)
+1. Les données peuvent être instables
+2. Il est difficile de détecter des données peu utilisées
+3. Chaque nouvelle donnée ouvre une vulnérabilité
+
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+- Enfin une des particularité est système employant le machine learning est la
+  dépendance aux données.
+- c'est une vulnérabilité qu'il faut apprendre a gérer
+
+1. Comme par exemple si un modèle prend en entré des prédiction d'un autre
+  modèle. Si cet autre modèle est mis a jours on peut avoir a changer notre
+  modèle.
+  - Les données peuvent aussi venir d'un autre composent géré par une autre
+  équipe.
+  - Une solution est de fixé et versionner les données utilisé, il
+  faut dont pouvoir gerer ca.
+2. Detecter une dépendance à un package peut utilisé est facile. Par contre pour
+  des données peut utilisé c'est plus dure.
+  - ou des données peuvent apporter vraiment peu de chose
+  - Le problème c'est que chaque dépendence à des données peu utile laisse une
+    vulnérabilité inutile.
+3. que ce soit au moment de l'entrainement ou de la prédiction. C'est une entré
+  pour nos utilisateurs. Cette entré peut faire tomber notre système.
+
+Il faut donc etre très précocionneur quand on traite des données.
+
+cite:sculley2015hidden
+#+END_NOTES
+
+** Un processus de déploiement continu pour le /Machine Learning/
+
+#+HTML: <img src="./figures/cd4ml-end-to-end.png" align="middle">
+
+#+BEGIN_NOTES
+Si on résume ce qui à été dit on peut voir le déploiement d'une solution reposant
+sur le /machine learning/ comme la succession de ces étapes.
+
+On voit ici les différentes étapes du processus de déploiement ainsi que les
+artefact qui correspondent à chaque étape.
+
+1. on entrain des modèle sur des données static (train
+
+2. on a des modèle candidat qu'on peut comparé sur des donénes de test (jamais vu pendant l'entrainement
+
+3. un modèle est choisie et on peut le testé en tant que modèle en production
+   c'est dans sont enviromment de prod fournissant des prédiction à travers une api
+4. puis on déploie et on monitor le comportement du modèle en production. Ces
+   bug, si c'est de la prédiction on voir si il a juste ou pas ?
+5. et On recommence
+
+
+d'après [[https://martinfowler.com/articles/cd4ml.html?utm_campaign=Data_Elixir&utm_medium=email&utm_source=Data_Elixir_250][Continuous Delivery for Machine Learning]]
+#+END_NOTES
+
+** Les points clés de la production                               :noexport:
+:LOGBOOK:
+- Note taken on [2019-12-17 mar. 12:56] \\
+  définir les concepts du tableau après
+:END:
+
+*** Entraînement du modèle
+- offline par un data scientiste
+- Tous les jours à heure fixe
+- Sur un flux de données
+*** Prédiction du modèle
+- Tous les jours à heure fixe
+- A la demande d'un utilisateur
+- Sur un flux de données
+*** Gestion du système
+- Mesure les performances du modèle
+  - prédiction (precision du modèle)
+  - métier (indicateur metier)
+- Mesure de la qualité des données entrantes, est ce que les données entrantes dérivent ?
+*** Mise à jour du système
+- Comment déployer un nouveau modèle ?
+- Quand déployer un nouveau modèle ?
+** Quelques architectures d'une application /Machine Learning/    :noexport:
+
+|--------------+------------+--------------+----------------------|
+| /            | <          |              | >                    |
+|              | BD partagé | Rest Api     | Streaming            |
+|--------------+------------+--------------+----------------------|
+| Entraînement | Batch      | Batch        | Streaming            |
+|--------------+------------+--------------+----------------------|
+| Prédiction   | Batch      | A la demande | Streaming            |
+|--------------+------------+--------------+----------------------|
+| Exemple      | météo      | pub en ligne | Detection de fraudes |
+|--------------+------------+--------------+----------------------|
+
+#+BEGIN_NOTES
+- Rest api
+- Streaming:
+  - necessite des techno qui gère des flux de données come Kafka
+  - a chaque fraude/faute detecté quand on a le feedback on peut réentréner le
+    modèle pour s'adaptéer à la situation
+#+END_NOTES
+*** Un exemple d'architecture
+#+HTML: <img src="./figures/example_architecture.jpg" align="middle">
+** Une pipeline de travail pour un projet Machine Learning        :noexport:
+#+HTML: <img src="./figures/ml_gl_workflow.png" align="middle" width="140%">
+
+#+BEGIN_NOTES
+Maintenant qu'on a dit tous ca comment on travail sur un projet data science. On
+peut essayer de se donner un workflow.
+
+Mais c'est pas suffisent.
+
+Faire du machine learning c'est bien mais si ca ne va jamais en production ca ne
+sert a rien ! Il faut donc bien comprendre ce qu'est la production.
+
+cite:amershi2019software
+#+END_NOTES
+
+* Quelques anti-patrons
+
+#+HTML: <img src="./figures/tech_debt.jpg" align="middle" width="45%">
+
+#+BEGIN_NOTES
+- les anti-patrons ou antipatterns sont des erreurs courantes de conception des
+  logiciels.
+- C'est eux qui creer ce qu'on appel de la dête technique.
+- C'est le temps qu'on va devoir supplémentaire passer dans le futur pour
+  continuer à faire vivre notre système mal conçu !
+#+END_NOTES
+
+** TODO Boucle d'interaction                                      :noexport:
+
+** /Glue Code/
+
+#+ATTR_REVEAL: :frag (appear)
+1. *Desciption*
+   - On utilise des solutions génériques pour faire le /machine learning/
+     (exemple: /sklearn/, /keras/)
+   - On code pour faire marcher différentes briques ensemble
+2. *Problèmes*
+   - Système est gélé, on ne veux pas tester d'autres alternatives
+   - On a du mal à intégrer la logique métier dans le code
+3. *Une solution*
+   - Développer la solution complète peut être moins coûteux
+   - Développer des interfaces au dessus de paquets /black box/
+
+#+BEGIN_NOTES
+Un premier anti patron est ce qui est appelé le glue code en anglais. C'est le
+code ciment
+
+1. Vous avez du l'experimenter on code surtout entre les appel au bibliotheque
+   de ML
+2. Par exemple on peut avoir du mal a modifier la fonction objectif pour
+   integrer la logique metier.
+3. Ca permet d'avoir un système plus robuste au changement
+4. Exemple: j'ai travaillé 2 ans pour SE on délivrais des composant analytics.
+   C'était simplement des algo bien connue du machine learning encapsulé.
+5. le gros du travaille était dans l'interface
+#+END_NOTES
+
+** /Pipeline Jungles/
+#+ATTR_REVEAL: :frag (appear)
+1. *Desciption*
+   - les données doivent être arrangées pour être compatible avec les api des
+     modèles
+   - on créer beaucoup de nouveaux /features/
+2. *Problèmes*
+   - quand des nouvelles données arrivent ont ne refactorise pas forcément
+     toutes la /pipeline data/
+   - plus la /pipeline data/ est complexe plus elle sera dure à maintenir et
+     debugger
+3. *Une solution*
+   - Il faut repenser la /pipeline/ des données depuis le début
+** Code expérimental mort
+#+ATTR_REVEAL: :frag (appear)
+1. *Desciption*
+   - Une conséquence des anti-patrons /Pipeline jungles/ et /glue code/ est
+     qu'il peut être intéressant d'utiliser des branchements conditionnels pour
+     faire des expériences.
+2. *Problèmes*
+   - Les branchements conditionnels rendent la retrocompatibilité complexe
+   - le code trop complexe
+3. *Une solution*
+   - Il faut éviter ce genre de branchement
+   - examiner le code périodiquement et supprimer ceux qui sont mort
+
+** Manque d'abstraction
+1. *Desciption*
+   - Pas d'abstraction commune pour décrire les systèmes /Machine learning/
+2. *Problèmes*
+   - Les abstractions sont à la base du génie logiciel
+
+   #+BEGIN_NOTES
+   1. manque des fameux design pattern
+   2. c'est ce qu'on fait en gl et qui nous permet de construire des système
+      robuste au changement
+   - C'est pour ca que j'atait bien embété pour faire ce cours :D
+   #+END_NOTES
+
+** Un exemple de patron: /Map-reduce/
+
+#+HTML: <img src="./figures/mapreduce-fonctionnement.png" align="middle">
+
+#+BEGIN_NOTES
+C'est un patron très utilisé pour le calcule parallèle sur plusieurs machine
+
+Pour ce patron on a deux fonctions
+- =map= qui permet de distribuer le travail sur différent noeud
+- =reduce= qui permet calculer le resultat sur chaque cluster
+- Ce design pattern fucntion très bien pour beaucoup de traitement de données.
+- Mais pas pour l'apprentissage en séquence
+#+END_NOTES
+
+* Un exemple                                                       :noexport:
+
+#+BEGIN_NOTES
+Ce n'est pas du tout une méthode systématique pour consevoir, c'est juste
+l'étude d'un cas concret (Schneider Electric).
+
+Je vous exposer le problème technique, les contraintes et comment ils ont
+répondu au problème.
+#+END_NOTES
+
+** La problématique
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+
+#+HTML: <img src="./figures/smart_building.jpg" align="middle">
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+
+#+ATTR_REVEAL: :frag (appear)
+- 40% de l'energy modial est dépensé dans les batiments
+- optimization de la consomation energétique (energie renouvlable, batterie)
+- la première étape est de pouvoir *prédire la consomation d'un batiment*
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+On pose le decors. On S'attend a ce que les batiment de demain embarque du
+machine learning !
+
+Etre capable de prédire la consommation est la première étape.
+#+END_NOTES
+
+** Le contexte                                                    :noexport:
+
+#+ATTR_REVEAL: :frag (appear)
+1. Équipe de R&D qui historiquement fait propose des prototype qui démondre une
+   faisabilité.
+2. Les clients ?
+   - d'autres equipes de l'entreprise
+   - des exterieurs à l'entreprise
+
+#+BEGIN_NOTES
+1. donc l'équipe n'est pas habitué à dévelloper des logiciels, à mettre en
+   production
+2. Questions très importante ! pourquoi on fait ca ?
+   - pour intégrer notre system dans une solution plus grande, on connait un peu
+     leur solution, on peut envisager un acompgnement
+   - pour en faire ce qu'ils veulent ! on rentre en concurence avec plein de
+     personne. En gros si on veux que ca se vendent ca à interet à etre bon !
+#+END_NOTES
+
+** Comment valider ?
+** Comment déployer ?
+** Comment surveiller ?
+** Comment faire évoluer ?
+** Comment faire de l'intégration/déploiement continue ?
+* Références
+- [[https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/][Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow]]
+- [[https://papers.nips.cc/paper/5656-hidden-technical-debt-in-machine-learning-systems][Hidden Technical Debt in Machine Learning Systems]]
+- [[https://martinfowler.com/articles/cd4ml.html?utm_campaign=Data_Elixir&utm_medium=email&utm_source=Data_Elixir_250][Continuous Delivery for Machine Learning]]
+- [[https://fr.slideshare.net/turi-inc/machine-learning-in-production][Machine learning in production]]
+- [[https://docs.oracle.com/fr/solutions/learn-architect-microservice/index.html#GUID-1A9ECC2B-F7E6-430F-8EDA-911712467953][Différences entre les microservices et l'architecture unilithic]]
+
+#+REVEAL: split
+bibliography:~/Private/bibliotheque/bibliotheque.bib
