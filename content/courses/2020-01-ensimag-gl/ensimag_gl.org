@@ -6,7 +6,7 @@
 #+LANGUAGE: fr
 
 # reveal options: see https://github.com/yjwen/org-reveal
-#+REVEAL_ROOT: ../js/reveal.js/
+# #+REVEAL_ROOT: ../js/reveal.js/
 #+REVEAL_TRANS: none
 #+REVEAL_PLUGINS: (highlight notes)
 #+OPTIONS: reveal_center:nil reveal_progress:t reveal_history:nil reveal_control:t
@@ -557,4 +557,4 @@ Etre capable de prédire la consommation est la première étape.
 - [[https://docs.oracle.com/fr/solutions/learn-architect-microservice/index.html#GUID-1A9ECC2B-F7E6-430F-8EDA-911712467953][Différences entre les microservices et l'architecture unilithic]]
 
 #+REVEAL: split
-bibliography:~/bibliotheque/bibliotheque.bib
+bibliography:~/Private/bibliotheque/bibliotheque.bib
